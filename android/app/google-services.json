@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "485291165739",
+    "project_id": "athlima-2effd",
+    "storage_bucket": "athlima-2effd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:485291165739:android:b61da5cccc514fa7d2c26e",
+        "android_client_info": {
+          "package_name": "athlima.ai"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "485291165739-m1j31dmrm1g2r42jmqd0h3hi5068rq94.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1hlSfjC7q3GczIUzWOYJbHdM9yBkw84A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "485291165739-m1j31dmrm1g2r42jmqd0h3hi5068rq94.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "485291165739-oqhd814l700dtvhp0o8fu2h71vnaig60.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "athlima.ai"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

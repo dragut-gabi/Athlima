@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>485291165739-oqhd814l700dtvhp0o8fu2h71vnaig60.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.485291165739-oqhd814l700dtvhp0o8fu2h71vnaig60</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>485291165739-0ooffrt73mt7hau9n15ito6usmsjm5ks.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBDu5h-kjIZXdzIBRLREEkGc68EN_hqXiE</string>
+	<key>GCM_SENDER_ID</key>
+	<string>485291165739</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>athlima.ai</string>
+	<key>PROJECT_ID</key>
+	<string>athlima-2effd</string>
+	<key>STORAGE_BUCKET</key>
+	<string>athlima-2effd.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:485291165739:ios:9c65a2e3118f5aaad2c26e</string>
+</dict>
+</plist>
