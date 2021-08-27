@@ -2,6 +2,10 @@ import 'package:built_value/standard_json_plugin.dart';
 
 import 'users_record.dart';
 import 'appointments_record.dart';
+import 'sports_record.dart';
+import 'levels_record.dart';
+import 'skills_record.dart';
+import 'events_record.dart';
 
 import 'index.dart';
 
@@ -14,6 +18,10 @@ const kDocumentReferenceField = 'Document__Reference__Field';
 @SerializersFor(const [
   UsersRecord,
   AppointmentsRecord,
+  SportsRecord,
+  LevelsRecord,
+  SkillsRecord,
+  EventsRecord,
 ])
 final Serializers serializers = (_$serializers.toBuilder()
       ..add(DocumentReferenceSerializer())

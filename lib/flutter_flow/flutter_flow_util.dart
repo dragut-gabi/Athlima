@@ -9,6 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'lat_lng.dart';
 
+export 'package:page_transition/page_transition.dart';
 export 'lat_lng.dart';
 export 'place.dart';
 

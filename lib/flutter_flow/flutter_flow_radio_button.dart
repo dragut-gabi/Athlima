@@ -74,9 +74,12 @@ class _FlutterFlowRadioButtonState extends State<FlutterFlowRadioButton> {
     return RadioGroup<String>.builder(
       direction: widget.direction,
       groupValue: groupValue,
-      onChanged: (value) => setState(() {
-        groupValue = value;
-      }),
+      onChanged: (value) {
+        widget.onChanged(value);
+        setState(() {
+          groupValue = value;
+        });
+      },
       activeColor: widget.radioButtonColor,
       toggleable: widget.toggleable,
       textStyle: widget.textStyle,

@@ -6,6 +6,10 @@ import '../flutter_flow/flutter_flow_util.dart';
 
 import 'schema/users_record.dart';
 import 'schema/appointments_record.dart';
+import 'schema/sports_record.dart';
+import 'schema/levels_record.dart';
+import 'schema/skills_record.dart';
+import 'schema/events_record.dart';
 import 'schema/serializers.dart';
 
 export 'package:cloud_firestore/cloud_firestore.dart';
@@ -14,6 +18,10 @@ export 'schema/serializers.dart';
 
 export 'schema/users_record.dart';
 export 'schema/appointments_record.dart';
+export 'schema/sports_record.dart';
+export 'schema/levels_record.dart';
+export 'schema/skills_record.dart';
+export 'schema/events_record.dart';
 
 Stream<List<UsersRecord>> queryUsersRecord(
         {Query Function(Query) queryBuilder,
@@ -28,6 +36,34 @@ Stream<List<AppointmentsRecord>> queryAppointmentsRecord(
         bool singleRecord = false}) =>
     queryCollection(
         AppointmentsRecord.collection, AppointmentsRecord.serializer,
+        queryBuilder: queryBuilder, limit: limit, singleRecord: singleRecord);
+
+Stream<List<SportsRecord>> querySportsRecord(
+        {Query Function(Query) queryBuilder,
+        int limit = -1,
+        bool singleRecord = false}) =>
+    queryCollection(SportsRecord.collection, SportsRecord.serializer,
+        queryBuilder: queryBuilder, limit: limit, singleRecord: singleRecord);
+
+Stream<List<LevelsRecord>> queryLevelsRecord(
+        {Query Function(Query) queryBuilder,
+        int limit = -1,
+        bool singleRecord = false}) =>
+    queryCollection(LevelsRecord.collection, LevelsRecord.serializer,
+        queryBuilder: queryBuilder, limit: limit, singleRecord: singleRecord);
+
+Stream<List<SkillsRecord>> querySkillsRecord(
+        {Query Function(Query) queryBuilder,
+        int limit = -1,
+        bool singleRecord = false}) =>
+    queryCollection(SkillsRecord.collection, SkillsRecord.serializer,
+        queryBuilder: queryBuilder, limit: limit, singleRecord: singleRecord);
+
+Stream<List<EventsRecord>> queryEventsRecord(
+        {Query Function(Query) queryBuilder,
+        int limit = -1,
+        bool singleRecord = false}) =>
+    queryCollection(EventsRecord.collection, EventsRecord.serializer,
         queryBuilder: queryBuilder, limit: limit, singleRecord: singleRecord);
 
 Stream<List<T>> queryCollection<T>(
