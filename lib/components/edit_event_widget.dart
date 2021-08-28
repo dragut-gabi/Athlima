@@ -622,8 +622,8 @@ class _EditEventWidgetState extends State<EditEventWidget>
                                   onPressed: () async {
                                     final skillsUpdateData =
                                         createSkillsRecordData(
-                                      sport: skillEvent.sport,
-                                      level: skillEvent.level,
+                                      sport: dropDown1Value,
+                                      level: dropDown2Value,
                                     );
                                     await buttonSkillsRecord.reference
                                         .update(skillsUpdateData);
