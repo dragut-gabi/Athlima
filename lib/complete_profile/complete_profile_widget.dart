@@ -326,6 +326,7 @@ class _CompleteProfileWidgetState extends State<CompleteProfileWidget>
                           displayName: yourNameController.text,
                           age: int.parse(yourAgeController.text),
                           userSex: radioButtonValue,
+                          photoUrl: uploadedFileUrl,
                         );
                         await buttonLoginUsersRecord.reference
                             .update(usersUpdateData);

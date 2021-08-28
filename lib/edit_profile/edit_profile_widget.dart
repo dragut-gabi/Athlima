@@ -361,7 +361,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                           displayName: yourNameController?.text ?? '',
                           email: yourEmailController.text,
                           age: int.parse(yourAgeController?.text ?? ''),
-                          userSex: editProfileUsersRecord.userSex,
+                          userSex: radioButtonValue,
                         );
                         await editProfileUsersRecord.reference
                             .update(usersUpdateData);

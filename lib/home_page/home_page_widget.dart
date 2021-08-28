@@ -80,20 +80,39 @@ class _HomePageWidgetState extends State<HomePageWidget> {
             ),
             Padding(
               padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(0, 4, 0, 0),
-                    child: Text(
-                      currentUserDisplayName,
-                      style: FlutterFlowTheme.title2.override(
-                        fontFamily: 'Lexend Deca',
-                        fontWeight: FontWeight.bold,
+              child: StreamBuilder<UsersRecord>(
+                stream: UsersRecord.getDocument(currentUserReference),
+                builder: (context, snapshot) {
+                  // Customize what your widget looks like when it's loading.
+                  if (!snapshot.hasData) {
+                    return Center(
+                      child: SizedBox(
+                        width: 40,
+                        height: 40,
+                        child: SpinKitPumpingHeart(
+                          color: FlutterFlowTheme.primaryColor,
+                          size: 40,
+                        ),
                       ),
-                    ),
-                  )
-                ],
+                    );
+                  }
+                  final usernameMessageUsersRecord = snapshot.data;
+                  return Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(0, 4, 0, 0),
+                        child: Text(
+                          usernameMessageUsersRecord.displayName,
+                          style: FlutterFlowTheme.title2.override(
+                            fontFamily: 'Lexend Deca',
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      )
+                    ],
+                  );
+                },
               ),
             ),
             Padding(
