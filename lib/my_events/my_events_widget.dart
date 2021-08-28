@@ -123,7 +123,7 @@ class _MyEventsWidgetState extends State<MyEventsWidget> {
                                   final listViewEventsRecord =
                                       listViewEventsRecordList[listViewIndex];
                                   return Padding(
-                                    padding: EdgeInsets.fromLTRB(16, 0, 16, 12),
+                                    padding: EdgeInsets.fromLTRB(16, 10, 16, 5),
                                     child: StreamBuilder<EventsRecord>(
                                       stream: EventsRecord.getDocument(
                                           listViewEventsRecord.reference),
@@ -203,160 +203,165 @@ class _MyEventsWidgetState extends State<MyEventsWidget> {
                                                     }
                                                     final paddingSkillsRecord =
                                                         snapshot.data;
-                                                    return Column(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      children: [
-                                                        Row(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Expanded(
-                                                              child: Padding(
-                                                                padding:
-                                                                    EdgeInsets
-                                                                        .fromLTRB(
-                                                                            4,
-                                                                            0,
-                                                                            0,
-                                                                            0),
-                                                                child: Text(
-                                                                  listViewEventsRecord
-                                                                      .name,
-                                                                  style: FlutterFlowTheme
-                                                                      .title3
-                                                                      .override(
-                                                                    fontFamily:
-                                                                        'Lexend Deca',
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Icon(
-                                                              Icons
-                                                                  .chevron_right_rounded,
-                                                              color:
-                                                                  FlutterFlowTheme
-                                                                      .grayLight,
-                                                              size: 24,
-                                                            )
-                                                          ],
-                                                        ),
-                                                        Padding(
-                                                          padding: EdgeInsets
-                                                              .fromLTRB(
-                                                                  0, 8, 0, 0),
-                                                          child: Row(
+                                                    return SingleChildScrollView(
+                                                      child: Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        children: [
+                                                          Row(
                                                             mainAxisSize:
                                                                 MainAxisSize
                                                                     .max,
                                                             mainAxisAlignment:
                                                                 MainAxisAlignment
-                                                                    .center,
+                                                                    .spaceBetween,
                                                             children: [
-                                                              Card(
-                                                                clipBehavior: Clip
-                                                                    .antiAliasWithSaveLayer,
-                                                                color: FlutterFlowTheme
-                                                                    .background,
+                                                              Expanded(
                                                                 child: Padding(
                                                                   padding: EdgeInsets
                                                                       .fromLTRB(
-                                                                          8,
                                                                           4,
-                                                                          8,
-                                                                          4),
+                                                                          0,
+                                                                          0,
+                                                                          0),
                                                                   child: Text(
-                                                                    dateTimeFormat(
-                                                                        'd/M H:m',
-                                                                        listViewEventsRecord
-                                                                            .dateTime),
+                                                                    listViewEventsRecord
+                                                                        .name,
                                                                     style: FlutterFlowTheme
-                                                                        .bodyText1
+                                                                        .title3
                                                                         .override(
                                                                       fontFamily:
                                                                           'Lexend Deca',
-                                                                      color: FlutterFlowTheme
-                                                                          .textColor,
                                                                     ),
                                                                   ),
                                                                 ),
                                                               ),
-                                                              Row(
-                                                                mainAxisSize:
-                                                                    MainAxisSize
-                                                                        .max,
-                                                                children: [
-                                                                  Padding(
+                                                              Icon(
+                                                                Icons
+                                                                    .chevron_right_rounded,
+                                                                color: FlutterFlowTheme
+                                                                    .grayLight,
+                                                                size: 24,
+                                                              )
+                                                            ],
+                                                          ),
+                                                          Padding(
+                                                            padding: EdgeInsets
+                                                                .fromLTRB(
+                                                                    0, 8, 0, 0),
+                                                            child: Row(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .center,
+                                                              children: [
+                                                                Card(
+                                                                  clipBehavior:
+                                                                      Clip.antiAliasWithSaveLayer,
+                                                                  color: FlutterFlowTheme
+                                                                      .background,
+                                                                  child:
+                                                                      Padding(
                                                                     padding: EdgeInsets
                                                                         .fromLTRB(
                                                                             8,
-                                                                            0,
-                                                                            0,
-                                                                            0),
+                                                                            4,
+                                                                            8,
+                                                                            4),
                                                                     child: Text(
-                                                                      'For',
+                                                                      dateTimeFormat(
+                                                                          'd/M H:m',
+                                                                          listViewEventsRecord
+                                                                              .dateTime),
                                                                       style: FlutterFlowTheme
                                                                           .bodyText1
                                                                           .override(
                                                                         fontFamily:
                                                                             'Lexend Deca',
+                                                                        color: FlutterFlowTheme
+                                                                            .textColor,
                                                                       ),
                                                                     ),
-                                                                  )
-                                                                ],
-                                                              ),
-                                                              Expanded(
-                                                                child: Padding(
-                                                                  padding: EdgeInsets
-                                                                      .fromLTRB(
-                                                                          4,
-                                                                          0,
-                                                                          0,
-                                                                          0),
-                                                                  child: Text(
-                                                                    paddingSkillsRecord
-                                                                        .sport,
-                                                                    style: FlutterFlowTheme
-                                                                        .bodyText1
-                                                                        .override(
-                                                                      fontFamily:
-                                                                          'Lexend Deca',
-                                                                      color: FlutterFlowTheme
-                                                                          .secondaryColor,
+                                                                  ),
+                                                                ),
+                                                                Row(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .max,
+                                                                  children: [
+                                                                    Padding(
+                                                                      padding: EdgeInsets
+                                                                          .fromLTRB(
+                                                                              8,
+                                                                              0,
+                                                                              0,
+                                                                              0),
+                                                                      child:
+                                                                          Text(
+                                                                        'For',
+                                                                        style: FlutterFlowTheme
+                                                                            .bodyText1
+                                                                            .override(
+                                                                          fontFamily:
+                                                                              'Lexend Deca',
+                                                                        ),
+                                                                      ),
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                                Expanded(
+                                                                  child:
+                                                                      Padding(
+                                                                    padding: EdgeInsets
+                                                                        .fromLTRB(
+                                                                            4,
+                                                                            0,
+                                                                            0,
+                                                                            0),
+                                                                    child: Text(
+                                                                      paddingSkillsRecord
+                                                                          .sport,
+                                                                      style: FlutterFlowTheme
+                                                                          .bodyText1
+                                                                          .override(
+                                                                        fontFamily:
+                                                                            'Lexend Deca',
+                                                                        color: FlutterFlowTheme
+                                                                            .secondaryColor,
+                                                                      ),
                                                                     ),
                                                                   ),
                                                                 ),
-                                                              ),
-                                                              Expanded(
-                                                                child: Padding(
-                                                                  padding: EdgeInsets
-                                                                      .fromLTRB(
-                                                                          4,
-                                                                          0,
-                                                                          0,
-                                                                          0),
-                                                                  child: Text(
-                                                                    paddingSkillsRecord
-                                                                        .level,
-                                                                    style: FlutterFlowTheme
-                                                                        .bodyText1
-                                                                        .override(
-                                                                      fontFamily:
-                                                                          'Lexend Deca',
-                                                                      color: FlutterFlowTheme
-                                                                          .secondaryColor,
+                                                                Expanded(
+                                                                  child:
+                                                                      Padding(
+                                                                    padding: EdgeInsets
+                                                                        .fromLTRB(
+                                                                            4,
+                                                                            0,
+                                                                            0,
+                                                                            0),
+                                                                    child: Text(
+                                                                      paddingSkillsRecord
+                                                                          .level,
+                                                                      style: FlutterFlowTheme
+                                                                          .bodyText1
+                                                                          .override(
+                                                                        fontFamily:
+                                                                            'Lexend Deca',
+                                                                        color: FlutterFlowTheme
+                                                                            .secondaryColor,
+                                                                      ),
                                                                     ),
                                                                   ),
-                                                                ),
-                                                              )
-                                                            ],
-                                                          ),
-                                                        )
-                                                      ],
+                                                                )
+                                                              ],
+                                                            ),
+                                                          )
+                                                        ],
+                                                      ),
                                                     );
                                                   },
                                                 ),
@@ -489,160 +494,165 @@ class _MyEventsWidgetState extends State<MyEventsWidget> {
                                                     }
                                                     final paddingSkillsRecord =
                                                         snapshot.data;
-                                                    return Column(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      children: [
-                                                        Row(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Expanded(
-                                                              child: Padding(
-                                                                padding:
-                                                                    EdgeInsets
-                                                                        .fromLTRB(
-                                                                            4,
-                                                                            0,
-                                                                            0,
-                                                                            0),
-                                                                child: Text(
-                                                                  listViewEventsRecord
-                                                                      .name,
-                                                                  style: FlutterFlowTheme
-                                                                      .title3
-                                                                      .override(
-                                                                    fontFamily:
-                                                                        'Lexend Deca',
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Icon(
-                                                              Icons
-                                                                  .chevron_right_rounded,
-                                                              color:
-                                                                  FlutterFlowTheme
-                                                                      .grayLight,
-                                                              size: 24,
-                                                            )
-                                                          ],
-                                                        ),
-                                                        Padding(
-                                                          padding: EdgeInsets
-                                                              .fromLTRB(
-                                                                  0, 8, 0, 0),
-                                                          child: Row(
+                                                    return SingleChildScrollView(
+                                                      child: Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        children: [
+                                                          Row(
                                                             mainAxisSize:
                                                                 MainAxisSize
                                                                     .max,
                                                             mainAxisAlignment:
                                                                 MainAxisAlignment
-                                                                    .center,
+                                                                    .spaceBetween,
                                                             children: [
-                                                              Card(
-                                                                clipBehavior: Clip
-                                                                    .antiAliasWithSaveLayer,
-                                                                color: FlutterFlowTheme
-                                                                    .background,
+                                                              Expanded(
                                                                 child: Padding(
                                                                   padding: EdgeInsets
                                                                       .fromLTRB(
-                                                                          8,
                                                                           4,
-                                                                          8,
-                                                                          4),
+                                                                          0,
+                                                                          0,
+                                                                          0),
                                                                   child: Text(
-                                                                    dateTimeFormat(
-                                                                        'd/M H:m',
-                                                                        listViewEventsRecord
-                                                                            .dateTime),
+                                                                    listViewEventsRecord
+                                                                        .name,
                                                                     style: FlutterFlowTheme
-                                                                        .bodyText1
+                                                                        .title3
                                                                         .override(
                                                                       fontFamily:
                                                                           'Lexend Deca',
-                                                                      color: FlutterFlowTheme
-                                                                          .textColor,
                                                                     ),
                                                                   ),
                                                                 ),
                                                               ),
-                                                              Row(
-                                                                mainAxisSize:
-                                                                    MainAxisSize
-                                                                        .max,
-                                                                children: [
-                                                                  Padding(
+                                                              Icon(
+                                                                Icons
+                                                                    .chevron_right_rounded,
+                                                                color: FlutterFlowTheme
+                                                                    .grayLight,
+                                                                size: 24,
+                                                              )
+                                                            ],
+                                                          ),
+                                                          Padding(
+                                                            padding: EdgeInsets
+                                                                .fromLTRB(
+                                                                    0, 8, 0, 0),
+                                                            child: Row(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .center,
+                                                              children: [
+                                                                Card(
+                                                                  clipBehavior:
+                                                                      Clip.antiAliasWithSaveLayer,
+                                                                  color: FlutterFlowTheme
+                                                                      .background,
+                                                                  child:
+                                                                      Padding(
                                                                     padding: EdgeInsets
                                                                         .fromLTRB(
                                                                             8,
-                                                                            0,
-                                                                            0,
-                                                                            0),
+                                                                            4,
+                                                                            8,
+                                                                            4),
                                                                     child: Text(
-                                                                      'For',
+                                                                      dateTimeFormat(
+                                                                          'd/M H:m',
+                                                                          listViewEventsRecord
+                                                                              .dateTime),
                                                                       style: FlutterFlowTheme
                                                                           .bodyText1
                                                                           .override(
                                                                         fontFamily:
                                                                             'Lexend Deca',
+                                                                        color: FlutterFlowTheme
+                                                                            .textColor,
                                                                       ),
                                                                     ),
-                                                                  )
-                                                                ],
-                                                              ),
-                                                              Expanded(
-                                                                child: Padding(
-                                                                  padding: EdgeInsets
-                                                                      .fromLTRB(
-                                                                          4,
-                                                                          0,
-                                                                          0,
-                                                                          0),
-                                                                  child: Text(
-                                                                    paddingSkillsRecord
-                                                                        .sport,
-                                                                    style: FlutterFlowTheme
-                                                                        .bodyText1
-                                                                        .override(
-                                                                      fontFamily:
-                                                                          'Lexend Deca',
-                                                                      color: FlutterFlowTheme
-                                                                          .secondaryColor,
+                                                                  ),
+                                                                ),
+                                                                Row(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .max,
+                                                                  children: [
+                                                                    Padding(
+                                                                      padding: EdgeInsets
+                                                                          .fromLTRB(
+                                                                              8,
+                                                                              0,
+                                                                              0,
+                                                                              0),
+                                                                      child:
+                                                                          Text(
+                                                                        'For',
+                                                                        style: FlutterFlowTheme
+                                                                            .bodyText1
+                                                                            .override(
+                                                                          fontFamily:
+                                                                              'Lexend Deca',
+                                                                        ),
+                                                                      ),
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                                Expanded(
+                                                                  child:
+                                                                      Padding(
+                                                                    padding: EdgeInsets
+                                                                        .fromLTRB(
+                                                                            4,
+                                                                            0,
+                                                                            0,
+                                                                            0),
+                                                                    child: Text(
+                                                                      paddingSkillsRecord
+                                                                          .sport,
+                                                                      style: FlutterFlowTheme
+                                                                          .bodyText1
+                                                                          .override(
+                                                                        fontFamily:
+                                                                            'Lexend Deca',
+                                                                        color: FlutterFlowTheme
+                                                                            .secondaryColor,
+                                                                      ),
                                                                     ),
                                                                   ),
                                                                 ),
-                                                              ),
-                                                              Expanded(
-                                                                child: Padding(
-                                                                  padding: EdgeInsets
-                                                                      .fromLTRB(
-                                                                          4,
-                                                                          0,
-                                                                          0,
-                                                                          0),
-                                                                  child: Text(
-                                                                    paddingSkillsRecord
-                                                                        .level,
-                                                                    style: FlutterFlowTheme
-                                                                        .bodyText1
-                                                                        .override(
-                                                                      fontFamily:
-                                                                          'Lexend Deca',
-                                                                      color: FlutterFlowTheme
-                                                                          .secondaryColor,
+                                                                Expanded(
+                                                                  child:
+                                                                      Padding(
+                                                                    padding: EdgeInsets
+                                                                        .fromLTRB(
+                                                                            4,
+                                                                            0,
+                                                                            0,
+                                                                            0),
+                                                                    child: Text(
+                                                                      paddingSkillsRecord
+                                                                          .level,
+                                                                      style: FlutterFlowTheme
+                                                                          .bodyText1
+                                                                          .override(
+                                                                        fontFamily:
+                                                                            'Lexend Deca',
+                                                                        color: FlutterFlowTheme
+                                                                            .secondaryColor,
+                                                                      ),
                                                                     ),
                                                                   ),
-                                                                ),
-                                                              )
-                                                            ],
-                                                          ),
-                                                        )
-                                                      ],
+                                                                )
+                                                              ],
+                                                            ),
+                                                          )
+                                                        ],
+                                                      ),
                                                     );
                                                   },
                                                 ),

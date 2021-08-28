@@ -1,4 +1,3 @@
-import '../add_another_profile/add_another_profile_widget.dart';
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../backend/firebase_storage/storage.dart';
@@ -27,7 +26,6 @@ class _CompleteProfileWidgetState extends State<CompleteProfileWidget>
   String uploadedFileUrl = '';
   TextEditingController yourNameController;
   TextEditingController yourAgeController;
-  TextEditingController ailmentsController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final animationsMap = {
     'circleImageOnPageLoadAnimation': AnimationInfo(
@@ -58,13 +56,6 @@ class _CompleteProfileWidgetState extends State<CompleteProfileWidget>
       fadeIn: true,
       slideOffset: Offset(0, -40),
     ),
-    'textFieldOnPageLoadAnimation3': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      duration: 600,
-      delay: 200,
-      fadeIn: true,
-      slideOffset: Offset(0, -60),
-    ),
     'textOnPageLoadAnimation2': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
       duration: 600,
@@ -79,15 +70,7 @@ class _CompleteProfileWidgetState extends State<CompleteProfileWidget>
       fadeIn: true,
       slideOffset: Offset(0, -50),
     ),
-    'buttonOnPageLoadAnimation1': AnimationInfo(
-      curve: Curves.bounceOut,
-      trigger: AnimationTrigger.onPageLoad,
-      duration: 600,
-      delay: 350,
-      fadeIn: true,
-      slideOffset: Offset(0, -40),
-    ),
-    'buttonOnPageLoadAnimation2': AnimationInfo(
+    'buttonOnPageLoadAnimation': AnimationInfo(
       curve: Curves.bounceOut,
       trigger: AnimationTrigger.onPageLoad,
       duration: 600,
@@ -106,7 +89,6 @@ class _CompleteProfileWidgetState extends State<CompleteProfileWidget>
       this,
     );
 
-    ailmentsController = TextEditingController();
     yourAgeController = TextEditingController();
     yourNameController = TextEditingController();
   }
@@ -204,7 +186,7 @@ class _CompleteProfileWidgetState extends State<CompleteProfileWidget>
                       fontFamily: 'Lexend Deca',
                       color: FlutterFlowTheme.grayLight,
                     ),
-                    hintText: 'Please enter a valid number...',
+                    hintText: 'Please enter your name...',
                     hintStyle: FlutterFlowTheme.bodyText1.override(
                       fontFamily: 'Lexend Deca',
                       color: Color(0x98FFFFFF),
@@ -275,46 +257,6 @@ class _CompleteProfileWidgetState extends State<CompleteProfileWidget>
                 ).animated([animationsMap['textFieldOnPageLoadAnimation2']]),
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
-                child: TextFormField(
-                  controller: ailmentsController,
-                  obscureText: false,
-                  decoration: InputDecoration(
-                    labelText: 'Ailments',
-                    labelStyle: FlutterFlowTheme.bodyText1.override(
-                      fontFamily: 'Lexend Deca',
-                      color: FlutterFlowTheme.grayLight,
-                    ),
-                    hintText: 'What types of allergies do you have..',
-                    hintStyle: FlutterFlowTheme.bodyText1.override(
-                      fontFamily: 'Lexend Deca',
-                      color: Color(0x98FFFFFF),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Color(0x00000000),
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Color(0x00000000),
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    filled: true,
-                    fillColor: FlutterFlowTheme.darkBackground,
-                    contentPadding: EdgeInsets.fromLTRB(20, 24, 20, 24),
-                  ),
-                  style: FlutterFlowTheme.bodyText1.override(
-                    fontFamily: 'Lexend Deca',
-                    color: FlutterFlowTheme.textColor,
-                  ),
-                ).animated([animationsMap['textFieldOnPageLoadAnimation3']]),
-              ),
-              Padding(
                 padding: EdgeInsets.fromLTRB(20, 12, 20, 0),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
@@ -330,67 +272,37 @@ class _CompleteProfileWidgetState extends State<CompleteProfileWidget>
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(20, 12, 20, 0),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    FlutterFlowRadioButton(
-                      options: ['Male', 'Female', 'Undisclosed'],
-                      onChanged: (value) {
-                        setState(() => radioButtonValue = value);
-                      },
-                      optionHeight: 25,
-                      textStyle: FlutterFlowTheme.bodyText1.override(
-                        fontFamily: 'Lexend Deca',
-                        color: FlutterFlowTheme.textColor,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textPadding: EdgeInsets.fromLTRB(0, 0, 20, 0),
-                      buttonPosition: RadioButtonPosition.left,
-                      direction: Axis.horizontal,
-                      radioButtonColor: FlutterFlowTheme.primaryColor,
-                      toggleable: false,
-                      horizontalAlignment: WrapAlignment.start,
-                      verticalAlignment: WrapCrossAlignment.start,
-                    ).animated(
-                        [animationsMap['radioButtonOnPageLoadAnimation']])
-                  ],
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      FlutterFlowRadioButton(
+                        options: ['Male', 'Female', 'Undisclosed'],
+                        onChanged: (value) {
+                          setState(() => radioButtonValue = value);
+                        },
+                        optionHeight: 25,
+                        textStyle: FlutterFlowTheme.bodyText1.override(
+                          fontFamily: 'Lexend Deca',
+                          color: FlutterFlowTheme.textColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textPadding: EdgeInsets.fromLTRB(0, 0, 20, 0),
+                        buttonPosition: RadioButtonPosition.left,
+                        direction: Axis.horizontal,
+                        radioButtonColor: FlutterFlowTheme.primaryColor,
+                        toggleable: false,
+                        horizontalAlignment: WrapAlignment.start,
+                        verticalAlignment: WrapCrossAlignment.start,
+                      ).animated(
+                          [animationsMap['radioButtonOnPageLoadAnimation']])
+                    ],
+                  ),
                 ),
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(0, 24, 0, 0),
-                child: FFButtonWidget(
-                  onPressed: () async {
-                    await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => AddAnotherProfileWidget(),
-                      ),
-                    );
-                  },
-                  text: 'Add Another Profile',
-                  icon: Icon(
-                    Icons.add_rounded,
-                    size: 15,
-                  ),
-                  options: FFButtonOptions(
-                    width: 230,
-                    height: 56,
-                    color: FlutterFlowTheme.darkBackground,
-                    textStyle: FlutterFlowTheme.subtitle2.override(
-                      fontFamily: 'Lexend Deca',
-                      color: FlutterFlowTheme.textColor,
-                    ),
-                    elevation: 3,
-                    borderSide: BorderSide(
-                      color: Colors.transparent,
-                      width: 1,
-                    ),
-                    borderRadius: 8,
-                  ),
-                ).animated([animationsMap['buttonOnPageLoadAnimation1']]),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(0, 12, 0, 0),
+                padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
                 child: StreamBuilder<UsersRecord>(
                   stream: UsersRecord.getDocument(currentUserReference),
                   builder: (context, snapshot) {
@@ -441,7 +353,7 @@ class _CompleteProfileWidgetState extends State<CompleteProfileWidget>
                         ),
                         borderRadius: 8,
                       ),
-                    ).animated([animationsMap['buttonOnPageLoadAnimation2']]);
+                    ).animated([animationsMap['buttonOnPageLoadAnimation']]);
                   },
                 ),
               )

@@ -65,7 +65,7 @@ class _AddSkillWidgetState extends State<AddSkillWidget>
                 color: Color(0xFF465056),
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
+                padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
                 child: Text(
                   'Add skill',
                   style: FlutterFlowTheme.title3.override(
