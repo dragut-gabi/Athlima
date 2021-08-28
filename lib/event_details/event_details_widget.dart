@@ -209,69 +209,76 @@ class _EventDetailsWidgetState extends State<EventDetailsWidget> {
                               ),
                               child: Padding(
                                 padding: EdgeInsets.fromLTRB(12, 0, 12, 0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Card(
-                                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                                      color: FlutterFlowTheme.primaryColor,
-                                      elevation: 2,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(40),
-                                      ),
-                                      child: Padding(
-                                        padding:
-                                            EdgeInsets.fromLTRB(2, 2, 2, 2),
-                                        child: Container(
-                                          width: 40,
-                                          height: 40,
-                                          clipBehavior: Clip.antiAlias,
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                          ),
-                                          child: Image.network(
-                                            rowUserUsersRecord.photoUrl,
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Card(
+                                        clipBehavior:
+                                            Clip.antiAliasWithSaveLayer,
+                                        color: FlutterFlowTheme.primaryColor,
+                                        elevation: 2,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(40),
+                                        ),
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsets.fromLTRB(2, 2, 2, 2),
+                                          child: Container(
+                                            width: 40,
+                                            height: 40,
+                                            clipBehavior: Clip.antiAlias,
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: Image.network(
+                                              rowUserUsersRecord.photoUrl,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.fromLTRB(12, 0, 0, 0),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Text(
-                                                rowUserUsersRecord.displayName,
-                                                style: FlutterFlowTheme
-                                                    .subtitle1
-                                                    .override(
-                                                  fontFamily: 'Lexend Deca',
-                                                  color: FlutterFlowTheme
-                                                      .textColor,
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                          Text(
-                                            rowUserUsersRecord.email,
-                                            style: FlutterFlowTheme.bodyText1
-                                                .override(
-                                              fontFamily: 'Lexend Deca',
-                                              color:
-                                                  FlutterFlowTheme.primaryColor,
+                                      Padding(
+                                        padding:
+                                            EdgeInsets.fromLTRB(12, 0, 0, 0),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Text(
+                                                  rowUserUsersRecord
+                                                      .displayName,
+                                                  style: FlutterFlowTheme
+                                                      .subtitle1
+                                                      .override(
+                                                    fontFamily: 'Lexend Deca',
+                                                    color: FlutterFlowTheme
+                                                        .textColor,
+                                                  ),
+                                                )
+                                              ],
                                             ),
-                                          )
-                                        ],
-                                      ),
-                                    )
-                                  ],
+                                            Text(
+                                              rowUserUsersRecord.email,
+                                              style: FlutterFlowTheme.bodyText1
+                                                  .override(
+                                                fontFamily: 'Lexend Deca',
+                                                color: FlutterFlowTheme
+                                                    .primaryColor,
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),

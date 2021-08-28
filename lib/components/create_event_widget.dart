@@ -321,13 +321,14 @@ class _CreateEventWidgetState extends State<CreateEventWidget>
                     padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
                     child: InkWell(
                       onTap: () async {
-                        await DatePicker.showDatePicker(
+                        await DatePicker.showDateTimePicker(
                           context,
                           showTitleActions: true,
                           onConfirm: (date) {
                             setState(() => datePicked = date);
                           },
                           currentTime: DateTime.now(),
+                          minTime: DateTime.now(),
                         );
                       },
                       child: Material(
@@ -568,7 +569,7 @@ class _CreateEventWidgetState extends State<CreateEventWidget>
 
                             setState(() {});
                           },
-                          text: 'Create',
+                          text: 'Save',
                           options: FFButtonOptions(
                             width: 150,
                             height: 50,

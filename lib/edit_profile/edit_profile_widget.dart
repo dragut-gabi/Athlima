@@ -1,6 +1,8 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../backend/firebase_storage/storage.dart';
+import '../flutter_flow/flutter_flow_animations.dart';
+import '../flutter_flow/flutter_flow_drop_down_template.dart';
 import '../flutter_flow/flutter_flow_radio_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -23,19 +25,36 @@ class EditProfileWidget extends StatefulWidget {
   _EditProfileWidgetState createState() => _EditProfileWidgetState();
 }
 
-class _EditProfileWidgetState extends State<EditProfileWidget> {
-  String radioButtonValue;
+class _EditProfileWidgetState extends State<EditProfileWidget>
+    with TickerProviderStateMixin {
+  SkillsRecord newSkill;
+  String dropDown1Value;
+  String dropDown2Value;
   String uploadedFileUrl = '';
   TextEditingController yourNameController;
   TextEditingController yourEmailController;
   TextEditingController yourAgeController;
-  TextEditingController yourAilmentsController;
+  String radioButtonValue;
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final animationsMap = {
+    'dropDownOnPageLoadAnimation': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      duration: 600,
+      delay: 40,
+      fadeIn: true,
+      slideOffset: Offset(0, -20),
+    ),
+  };
 
   @override
   void initState() {
     super.initState();
-    yourAilmentsController = TextEditingController();
+    startAnimations(
+      animationsMap.values
+          .where((anim) => anim.trigger == AnimationTrigger.onPageLoad),
+      this,
+    );
+
     yourEmailController = TextEditingController(text: currentUserEmail);
   }
 
@@ -291,46 +310,169 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                       keyboardType: TextInputType.number,
                     ),
                   ),
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(25, 20, 0, 0),
+                        child: Text(
+                          'Skill',
+                          textAlign: TextAlign.start,
+                          style: FlutterFlowTheme.bodyText1.override(
+                            fontFamily: 'Lexend Deca',
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
-                    child: TextFormField(
-                      controller: yourAilmentsController,
-                      obscureText: false,
-                      decoration: InputDecoration(
-                        labelText: 'Ailments',
-                        labelStyle: FlutterFlowTheme.bodyText1.override(
-                          fontFamily: 'Lexend Deca',
-                          color: FlutterFlowTheme.grayLight,
-                        ),
-                        hintText: 'What types of allergies do you have..',
-                        hintStyle: FlutterFlowTheme.bodyText1.override(
-                          fontFamily: 'Lexend Deca',
-                          color: Color(0x98FFFFFF),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0x00000000),
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0x00000000),
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        filled: true,
-                        fillColor: FlutterFlowTheme.darkBackground,
-                        contentPadding: EdgeInsets.fromLTRB(20, 24, 20, 24),
-                      ),
+                    padding: EdgeInsets.fromLTRB(25, 0, 25, 0),
+                    child: Text(
+                      'Please select a sport and a your current level for it in order to add them as your skill',
+                      textAlign: TextAlign.start,
                       style: FlutterFlowTheme.bodyText1.override(
                         fontFamily: 'Lexend Deca',
-                        color: FlutterFlowTheme.textColor,
+                        fontSize: 10,
                       ),
-                      maxLines: 3,
                     ),
+                  ),
+                  Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(25, 10, 0, 0),
+                            child: Text(
+                              'Choose Sport',
+                              textAlign: TextAlign.start,
+                              style: FlutterFlowTheme.bodyText1.override(
+                                fontFamily: 'Lexend Deca',
+                                fontSize: 12,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                        child: FlutterFlowDropDown(
+                          options: [
+                            'Basketall',
+                            'Football',
+                            'Voley',
+                            'Cyclism',
+                            'Golf',
+                            'Running',
+                            'Yoga'
+                          ].toList(),
+                          onChanged: (value) {
+                            setState(() => dropDown1Value = value);
+                          },
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          height: 60,
+                          textStyle: FlutterFlowTheme.subtitle2.override(
+                            fontFamily: 'Lexend Deca',
+                            color: FlutterFlowTheme.textColor,
+                          ),
+                          icon: Icon(
+                            Icons.keyboard_arrow_down_rounded,
+                            color: FlutterFlowTheme.grayLight,
+                            size: 15,
+                          ),
+                          fillColor: FlutterFlowTheme.darkBackground,
+                          elevation: 3,
+                          borderColor: FlutterFlowTheme.background,
+                          borderWidth: 2,
+                          borderRadius: 8,
+                          margin: EdgeInsets.fromLTRB(20, 4, 16, 4),
+                          hidesUnderline: true,
+                        ).animated(
+                            [animationsMap['dropDownOnPageLoadAnimation']]),
+                      ),
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(25, 10, 0, 0),
+                            child: Text(
+                              'Choose Level',
+                              style: FlutterFlowTheme.bodyText1.override(
+                                fontFamily: 'Lexend Deca',
+                                fontSize: 12,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                        child: FlutterFlowDropDown(
+                          options: [
+                            'Begginer',
+                            'Amateur',
+                            'Prodigy',
+                            'Professional'
+                          ].toList(),
+                          onChanged: (value) {
+                            setState(() => dropDown2Value = value);
+                          },
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          height: 60,
+                          textStyle: FlutterFlowTheme.subtitle2.override(
+                            fontFamily: 'Lexend Deca',
+                            color: FlutterFlowTheme.textColor,
+                          ),
+                          fillColor: FlutterFlowTheme.darkBackground,
+                          elevation: 3,
+                          borderColor: FlutterFlowTheme.background,
+                          borderWidth: 2,
+                          borderRadius: 8,
+                          margin: EdgeInsets.fromLTRB(20, 4, 16, 4),
+                          hidesUnderline: true,
+                        ),
+                      ),
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(25, 10, 0, 0),
+                            child: FFButtonWidget(
+                              onPressed: () async {
+                                final skillsCreateData = createSkillsRecordData(
+                                  sport: dropDown1Value,
+                                  level: dropDown2Value,
+                                );
+                                final skillsRecordReference =
+                                    SkillsRecord.collection.doc();
+                                await skillsRecordReference
+                                    .set(skillsCreateData);
+                                newSkill = SkillsRecord.getDocumentFromData(
+                                    skillsCreateData, skillsRecordReference);
+
+                                setState(() {});
+                              },
+                              text: 'Add skill',
+                              options: FFButtonOptions(
+                                width: 130,
+                                height: 40,
+                                color: FlutterFlowTheme.primaryColor,
+                                textStyle: FlutterFlowTheme.subtitle2.override(
+                                  fontFamily: 'Lexend Deca',
+                                  color: Colors.white,
+                                ),
+                                borderSide: BorderSide(
+                                  color: Colors.transparent,
+                                  width: 1,
+                                ),
+                                borderRadius: 12,
+                              ),
+                            ),
+                          )
+                        ],
+                      )
+                    ],
                   ),
                   Padding(
                     padding: EdgeInsets.fromLTRB(20, 12, 20, 0),
@@ -348,53 +490,56 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                   ),
                   Padding(
                     padding: EdgeInsets.fromLTRB(20, 12, 20, 0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        StreamBuilder<UsersRecord>(
-                          stream: UsersRecord.getDocument(
-                              editProfileUsersRecord.reference),
-                          builder: (context, snapshot) {
-                            // Customize what your widget looks like when it's loading.
-                            if (!snapshot.hasData) {
-                              return Center(
-                                child: SizedBox(
-                                  width: 40,
-                                  height: 40,
-                                  child: SpinKitPumpingHeart(
-                                    color: FlutterFlowTheme.primaryColor,
-                                    size: 40,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          StreamBuilder<UsersRecord>(
+                            stream: UsersRecord.getDocument(
+                                editProfileUsersRecord.reference),
+                            builder: (context, snapshot) {
+                              // Customize what your widget looks like when it's loading.
+                              if (!snapshot.hasData) {
+                                return Center(
+                                  child: SizedBox(
+                                    width: 40,
+                                    height: 40,
+                                    child: SpinKitPumpingHeart(
+                                      color: FlutterFlowTheme.primaryColor,
+                                      size: 40,
+                                    ),
                                   ),
+                                );
+                              }
+                              final radioButtonUsersRecord = snapshot.data;
+                              return FlutterFlowRadioButton(
+                                options: ['Male', 'Female', 'Undisclosed'],
+                                onChanged: (value) {
+                                  setState(() => radioButtonValue = value);
+                                },
+                                optionHeight: 25,
+                                textStyle: FlutterFlowTheme.bodyText1.override(
+                                  fontFamily: 'Lexend Deca',
+                                  color: FlutterFlowTheme.textColor,
+                                  fontWeight: FontWeight.bold,
                                 ),
+                                textPadding: EdgeInsets.fromLTRB(0, 0, 20, 0),
+                                buttonPosition: RadioButtonPosition.left,
+                                direction: Axis.horizontal,
+                                radioButtonColor: FlutterFlowTheme.primaryColor,
+                                toggleable: false,
+                                horizontalAlignment: WrapAlignment.start,
+                                verticalAlignment: WrapCrossAlignment.start,
                               );
-                            }
-                            final radioButtonUsersRecord = snapshot.data;
-                            return FlutterFlowRadioButton(
-                              options: ['Male', 'Female', 'Undisclosed'],
-                              onChanged: (value) {
-                                setState(() => radioButtonValue = value);
-                              },
-                              optionHeight: 25,
-                              textStyle: FlutterFlowTheme.bodyText1.override(
-                                fontFamily: 'Lexend Deca',
-                                color: FlutterFlowTheme.textColor,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              textPadding: EdgeInsets.fromLTRB(0, 0, 20, 0),
-                              buttonPosition: RadioButtonPosition.left,
-                              direction: Axis.horizontal,
-                              radioButtonColor: FlutterFlowTheme.primaryColor,
-                              toggleable: false,
-                              horizontalAlignment: WrapAlignment.start,
-                              verticalAlignment: WrapCrossAlignment.start,
-                            );
-                          },
-                        )
-                      ],
+                            },
+                          )
+                        ],
+                      ),
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(0, 24, 0, 0),
+                    padding: EdgeInsets.fromLTRB(0, 24, 0, 20),
                     child: FFButtonWidget(
                       onPressed: () async {
                         final usersUpdateData = createUsersRecordData(

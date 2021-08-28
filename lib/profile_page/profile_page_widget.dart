@@ -1,5 +1,6 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
+import '../components/add_skill_widget.dart';
 import '../edit_profile/edit_profile_widget.dart';
 import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -76,7 +77,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget>
                   children: [
                     Container(
                       width: MediaQuery.of(context).size.width,
-                      height: 360,
+                      height: 250,
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.darkBackground,
                       ),
@@ -245,66 +246,17 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget>
                               ],
                             ),
                             Padding(
-                              padding: EdgeInsets.fromLTRB(0, 12, 20, 0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Text(
-                                    'Ailments',
-                                    textAlign: TextAlign.start,
-                                    style: FlutterFlowTheme.bodyText1.override(
-                                      fontFamily: 'Lexend Deca',
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                            Padding(
                               padding: EdgeInsets.fromLTRB(0, 8, 20, 0),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Expanded(
                                     child: AutoSizeText(
-                                      'Female',
+                                      profilePageUsersRecord.userSex,
                                       style: FlutterFlowTheme.title3.override(
                                         fontFamily: 'Lexend Deca',
                                       ),
                                     ),
-                                  )
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(0, 12, 0, 12),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Next Appointment',
-                                        textAlign: TextAlign.start,
-                                        style:
-                                            FlutterFlowTheme.bodyText1.override(
-                                          fontFamily: 'Lexend Deca',
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding:
-                                            EdgeInsets.fromLTRB(0, 4, 0, 0),
-                                        child: Text(
-                                          'Aug 20, 2021',
-                                          style:
-                                              FlutterFlowTheme.title1.override(
-                                            fontFamily: 'Lexend Deca',
-                                          ),
-                                        ),
-                                      )
-                                    ],
                                   )
                                 ],
                               ),
@@ -324,9 +276,28 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget>
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Text(
-                            'Past Appointments',
+                            'Skills',
                             style: FlutterFlowTheme.bodyText1.override(
                               fontFamily: 'Lexend Deca',
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(260, 0, 0, 0),
+                            child: InkWell(
+                              onTap: () async {
+                                await showModalBottomSheet(
+                                  isScrollControlled: true,
+                                  context: context,
+                                  builder: (context) {
+                                    return AddSkillWidget();
+                                  },
+                                );
+                              },
+                              child: Icon(
+                                Icons.add,
+                                color: FlutterFlowTheme.textColor,
+                                size: 24,
+                              ),
                             ),
                           )
                         ],
@@ -334,150 +305,107 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget>
                     ),
                     Padding(
                       padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                      child: StreamBuilder<List<EventsRecord>>(
-                        stream: queryEventsRecord(),
-                        builder: (context, snapshot) {
-                          // Customize what your widget looks like when it's loading.
-                          if (!snapshot.hasData) {
-                            return Center(
-                              child: SizedBox(
-                                width: 40,
-                                height: 40,
-                                child: SpinKitPumpingHeart(
-                                  color: FlutterFlowTheme.primaryColor,
-                                  size: 40,
-                                ),
-                              ),
-                            );
-                          }
-                          List<EventsRecord> listViewEventsRecordList =
-                              snapshot.data;
-                          // Customize what your widget looks like with no query results.
-                          if (snapshot.data.isEmpty) {
-                            return Container(
-                              height: 100,
-                              child: Center(
-                                child: Text('No results.'),
-                              ),
-                            );
-                          }
+                      child: Builder(
+                        builder: (context) {
+                          final skills =
+                              profilePageUsersRecord.skills?.toList() ?? [];
                           return ListView.builder(
                             padding: EdgeInsets.zero,
                             shrinkWrap: true,
                             scrollDirection: Axis.vertical,
-                            itemCount: listViewEventsRecordList.length,
-                            itemBuilder: (context, listViewIndex) {
-                              final listViewEventsRecord =
-                                  listViewEventsRecordList[listViewIndex];
+                            itemCount: skills.length,
+                            itemBuilder: (context, skillsIndex) {
+                              final skillsItem = skills[skillsIndex];
                               return Padding(
                                 padding: EdgeInsets.fromLTRB(0, 0, 0, 8),
-                                child: Material(
-                                  color: Colors.transparent,
-                                  elevation: 3,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  child: Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    height: 90,
-                                    decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.darkBackground,
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    child: Padding(
-                                      padding:
-                                          EdgeInsets.fromLTRB(12, 12, 12, 12),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Expanded(
-                                                child: Padding(
-                                                  padding: EdgeInsets.fromLTRB(
-                                                      4, 0, 0, 0),
-                                                  child: Text(
-                                                    '[Appointment Type]',
-                                                    style: FlutterFlowTheme
-                                                        .title3
-                                                        .override(
-                                                      fontFamily: 'Lexend Deca',
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              Icon(
-                                                Icons.chevron_right_rounded,
-                                                color:
-                                                    FlutterFlowTheme.grayLight,
-                                                size: 24,
-                                              )
-                                            ],
+                                child: StreamBuilder<SkillsRecord>(
+                                  stream: SkillsRecord.getDocument(skillsItem),
+                                  builder: (context, snapshot) {
+                                    // Customize what your widget looks like when it's loading.
+                                    if (!snapshot.hasData) {
+                                      return Center(
+                                        child: SizedBox(
+                                          width: 40,
+                                          height: 40,
+                                          child: SpinKitPumpingHeart(
+                                            color:
+                                                FlutterFlowTheme.primaryColor,
+                                            size: 40,
                                           ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsets.fromLTRB(0, 8, 0, 0),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Card(
-                                                  clipBehavior: Clip
-                                                      .antiAliasWithSaveLayer,
-                                                  color: FlutterFlowTheme
-                                                      .background,
-                                                  child: Padding(
-                                                    padding:
-                                                        EdgeInsets.fromLTRB(
-                                                            8, 4, 8, 4),
-                                                    child: Text(
-                                                      '[date_time]',
-                                                      style: FlutterFlowTheme
-                                                          .bodyText1
-                                                          .override(
-                                                        fontFamily:
-                                                            'Lexend Deca',
-                                                        color: FlutterFlowTheme
-                                                            .textColor,
+                                        ),
+                                      );
+                                    }
+                                    final appointmentCardSkillsRecord =
+                                        snapshot.data;
+                                    return Material(
+                                      color: Colors.transparent,
+                                      elevation: 3,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      child: Container(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        decoration: BoxDecoration(
+                                          color:
+                                              FlutterFlowTheme.darkBackground,
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        child: Padding(
+                                          padding: EdgeInsets.fromLTRB(
+                                              12, 12, 12, 12),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Expanded(
+                                                    child: Padding(
+                                                      padding:
+                                                          EdgeInsets.fromLTRB(
+                                                              4, 0, 0, 0),
+                                                      child: Text(
+                                                        appointmentCardSkillsRecord
+                                                            .sport,
+                                                        style: FlutterFlowTheme
+                                                            .title3
+                                                            .override(
+                                                          fontFamily:
+                                                              'Lexend Deca',
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
-                                                ),
-                                                Padding(
-                                                  padding: EdgeInsets.fromLTRB(
-                                                      8, 0, 0, 0),
-                                                  child: Text(
-                                                    'For',
-                                                    style: FlutterFlowTheme
-                                                        .bodyText1
-                                                        .override(
-                                                      fontFamily: 'Lexend Deca',
+                                                  Expanded(
+                                                    child: Padding(
+                                                      padding:
+                                                          EdgeInsets.fromLTRB(
+                                                              4, 0, 0, 0),
+                                                      child: Text(
+                                                        appointmentCardSkillsRecord
+                                                            .level,
+                                                        style: FlutterFlowTheme
+                                                            .title3
+                                                            .override(
+                                                          fontFamily:
+                                                              'Lexend Deca',
+                                                        ),
+                                                      ),
                                                     ),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding: EdgeInsets.fromLTRB(
-                                                      4, 0, 0, 0),
-                                                  child: Text(
-                                                    '[display_name]',
-                                                    style: FlutterFlowTheme
-                                                        .bodyText1
-                                                        .override(
-                                                      fontFamily: 'Lexend Deca',
-                                                      color: FlutterFlowTheme
-                                                          .secondaryColor,
-                                                    ),
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          )
-                                        ],
+                                                  )
+                                                ],
+                                              )
+                                            ],
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ),
+                                    );
+                                  },
                                 ),
                               );
                             },

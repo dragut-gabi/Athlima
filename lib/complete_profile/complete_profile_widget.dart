@@ -1,11 +1,13 @@
 import '../add_another_profile/add_another_profile_widget.dart';
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
+import '../backend/firebase_storage/storage.dart';
 import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_radio_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
+import '../flutter_flow/upload_media.dart';
 import '../main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -22,9 +24,10 @@ class CompleteProfileWidget extends StatefulWidget {
 class _CompleteProfileWidgetState extends State<CompleteProfileWidget>
     with TickerProviderStateMixin {
   String radioButtonValue;
-  TextEditingController ailmentsController;
-  TextEditingController yourAgeController;
+  String uploadedFileUrl = '';
   TextEditingController yourNameController;
+  TextEditingController yourAgeController;
+  TextEditingController ailmentsController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final animationsMap = {
     'circleImageOnPageLoadAnimation': AnimationInfo(
@@ -151,15 +154,37 @@ class _CompleteProfileWidgetState extends State<CompleteProfileWidget>
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              Container(
-                width: 120,
-                height: 120,
-                clipBehavior: Clip.antiAlias,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                ),
-                child: Image.asset(
-                  'assets/images/uiAvatar@2x.png',
+              InkWell(
+                onTap: () async {
+                  final selectedMedia = await selectMediaWithSourceBottomSheet(
+                    context: context,
+                  );
+                  if (selectedMedia != null &&
+                      validateFileFormat(selectedMedia.storagePath, context)) {
+                    showUploadMessage(context, 'Uploading file...',
+                        showLoading: true);
+                    final downloadUrl = await uploadData(
+                        selectedMedia.storagePath, selectedMedia.bytes);
+                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                    if (downloadUrl != null) {
+                      setState(() => uploadedFileUrl = downloadUrl);
+                      showUploadMessage(context, 'Success!');
+                    } else {
+                      showUploadMessage(context, 'Failed to upload media');
+                      return;
+                    }
+                  }
+                },
+                child: Container(
+                  width: 120,
+                  height: 120,
+                  clipBehavior: Clip.antiAlias,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                  ),
+                  child: Image.asset(
+                    'assets/images/uiAvatar@2x.png',
+                  ),
                 ),
               ).animated([animationsMap['circleImageOnPageLoadAnimation']]),
               Text(

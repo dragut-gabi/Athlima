@@ -70,6 +70,7 @@ class _MyEventsWidgetState extends State<MyEventsWidget> {
                 child: Column(
                   children: [
                     TabBar(
+                      isScrollable: true,
                       labelColor: FlutterFlowTheme.primaryColor,
                       indicatorColor: FlutterFlowTheme.secondaryColor,
                       tabs: [
