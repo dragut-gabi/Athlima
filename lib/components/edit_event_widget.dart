@@ -600,49 +600,74 @@ class _EditEventWidgetState extends State<EditEventWidget>
                               ),
                             ).animated(
                                 [animationsMap['buttonOnPageLoadAnimation1']]),
-                            FFButtonWidget(
-                              onPressed: () async {
-                                final skillsUpdateData = createSkillsRecordData(
-                                  sport: skillEvent.sport,
-                                  level: skillEvent.level,
-                                );
-                                await skillEvent.reference
-                                    .update(skillsUpdateData);
+                            StreamBuilder<SkillsRecord>(
+                              stream: SkillsRecord.getDocument(
+                                  containerEventsRecord.skill),
+                              builder: (context, snapshot) {
+                                // Customize what your widget looks like when it's loading.
+                                if (!snapshot.hasData) {
+                                  return Center(
+                                    child: SizedBox(
+                                      width: 40,
+                                      height: 40,
+                                      child: SpinKitPumpingHeart(
+                                        color: FlutterFlowTheme.primaryColor,
+                                        size: 40,
+                                      ),
+                                    ),
+                                  );
+                                }
+                                final buttonSkillsRecord = snapshot.data;
+                                return FFButtonWidget(
+                                  onPressed: () async {
+                                    final skillsUpdateData =
+                                        createSkillsRecordData(
+                                      sport: skillEvent.sport,
+                                      level: skillEvent.level,
+                                    );
+                                    await buttonSkillsRecord.reference
+                                        .update(skillsUpdateData);
 
-                                final eventsUpdateData = createEventsRecordData(
-                                  name: eventNameController?.text ?? '',
-                                  description:
-                                      problemDescriptionController?.text ?? '',
-                                  location: placePickerValue.latLng,
-                                  dateTime: datePicked,
-                                  skill: skillEvent.reference,
-                                  picture: uploadedFileUrl,
-                                );
-                                await containerEventsRecord.reference
-                                    .update(eventsUpdateData);
-                                Navigator.pop(context);
+                                    final eventsUpdateData =
+                                        createEventsRecordData(
+                                      name: eventNameController?.text ?? '',
+                                      description:
+                                          problemDescriptionController?.text ??
+                                              '',
+                                      location: placePickerValue.latLng,
+                                      dateTime: datePicked,
+                                      skill: skillEvent.reference,
+                                      picture: uploadedFileUrl,
+                                    );
+                                    await containerEventsRecord.reference
+                                        .update(eventsUpdateData);
+                                    Navigator.pop(context);
 
-                                setState(() {});
+                                    setState(() {});
+                                  },
+                                  text: 'Save',
+                                  options: FFButtonOptions(
+                                    width: 150,
+                                    height: 50,
+                                    color: FlutterFlowTheme.primaryColor,
+                                    textStyle:
+                                        FlutterFlowTheme.subtitle2.override(
+                                      fontFamily: 'Lexend Deca',
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    elevation: 3,
+                                    borderSide: BorderSide(
+                                      color: Colors.transparent,
+                                      width: 1,
+                                    ),
+                                    borderRadius: 8,
+                                  ),
+                                ).animated([
+                                  animationsMap['buttonOnPageLoadAnimation2']
+                                ]);
                               },
-                              text: 'Save',
-                              options: FFButtonOptions(
-                                width: 150,
-                                height: 50,
-                                color: FlutterFlowTheme.primaryColor,
-                                textStyle: FlutterFlowTheme.subtitle2.override(
-                                  fontFamily: 'Lexend Deca',
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                                elevation: 3,
-                                borderSide: BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1,
-                                ),
-                                borderRadius: 8,
-                              ),
-                            ).animated(
-                                [animationsMap['buttonOnPageLoadAnimation2']])
+                            )
                           ],
                         ),
                       )
