@@ -48,8 +48,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                         ),
-                        child: Image.asset(
-                          'assets/images/UI_avatar_2@3x.png',
+                        child: Image.network(
+                          valueOrDefault<String>(
+                            currentUserPhoto,
+                            'https://st2.depositphotos.com/1009634/7235/v/600/depositphotos_72350117-stock-illustration-no-user-profile-picture-hand.jpg',
+                          ),
                         ),
                       ),
                     ),
@@ -179,113 +182,55 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                             child: Row(
                                               mainAxisSize: MainAxisSize.max,
                                               children: [
-                                                StreamBuilder<SportsRecord>(
-                                                  stream:
-                                                      SportsRecord.getDocument(
-                                                          cardSkillsRecord
-                                                              .sport),
-                                                  builder: (context, snapshot) {
-                                                    // Customize what your widget looks like when it's loading.
-                                                    if (!snapshot.hasData) {
-                                                      return Center(
-                                                        child: SizedBox(
-                                                          width: 40,
-                                                          height: 40,
-                                                          child:
-                                                              SpinKitPumpingHeart(
-                                                            color:
-                                                                FlutterFlowTheme
-                                                                    .primaryColor,
-                                                            size: 40,
-                                                          ),
+                                                Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsets.fromLTRB(
+                                                              0, 4, 0, 0),
+                                                      child: Text(
+                                                        cardSkillsRecord.sport,
+                                                        style: FlutterFlowTheme
+                                                            .bodyText2
+                                                            .override(
+                                                          fontFamily:
+                                                              'Lexend Deca',
+                                                          color:
+                                                              Color(0xFF4B39EF),
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.w600,
                                                         ),
-                                                      );
-                                                    }
-                                                    final columnSportsRecord =
-                                                        snapshot.data;
-                                                    return Column(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      children: [
-                                                        Padding(
-                                                          padding: EdgeInsets
-                                                              .fromLTRB(
-                                                                  0, 4, 0, 0),
-                                                          child: Text(
-                                                            columnSportsRecord
-                                                                .name,
-                                                            style:
-                                                                FlutterFlowTheme
-                                                                    .bodyText2
-                                                                    .override(
-                                                              fontFamily:
-                                                                  'Lexend Deca',
-                                                              color: Color(
-                                                                  0xFF4B39EF),
-                                                              fontSize: 14,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                            ),
-                                                          ),
-                                                        )
-                                                      ],
-                                                    );
-                                                  },
+                                                      ),
+                                                    )
+                                                  ],
                                                 ),
-                                                StreamBuilder<LevelsRecord>(
-                                                  stream:
-                                                      LevelsRecord.getDocument(
-                                                          cardSkillsRecord
-                                                              .level),
-                                                  builder: (context, snapshot) {
-                                                    // Customize what your widget looks like when it's loading.
-                                                    if (!snapshot.hasData) {
-                                                      return Center(
-                                                        child: SizedBox(
-                                                          width: 40,
-                                                          height: 40,
-                                                          child:
-                                                              SpinKitPumpingHeart(
-                                                            color:
-                                                                FlutterFlowTheme
-                                                                    .primaryColor,
-                                                            size: 40,
-                                                          ),
+                                                Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsets.fromLTRB(
+                                                              0, 4, 0, 0),
+                                                      child: Text(
+                                                        cardSkillsRecord.level,
+                                                        style: FlutterFlowTheme
+                                                            .bodyText2
+                                                            .override(
+                                                          fontFamily:
+                                                              'Lexend Deca',
+                                                          color:
+                                                              Color(0xFF4B39EF),
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.w600,
                                                         ),
-                                                      );
-                                                    }
-                                                    final columnLevelsRecord =
-                                                        snapshot.data;
-                                                    return Column(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      children: [
-                                                        Padding(
-                                                          padding: EdgeInsets
-                                                              .fromLTRB(
-                                                                  0, 4, 0, 0),
-                                                          child: Text(
-                                                            columnLevelsRecord
-                                                                .level,
-                                                            style:
-                                                                FlutterFlowTheme
-                                                                    .bodyText2
-                                                                    .override(
-                                                              fontFamily:
-                                                                  'Lexend Deca',
-                                                              color: Color(
-                                                                  0xFF4B39EF),
-                                                              fontSize: 14,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                            ),
-                                                          ),
-                                                        )
-                                                      ],
-                                                    );
-                                                  },
+                                                      ),
+                                                    )
+                                                  ],
                                                 )
                                               ],
                                             ),

@@ -6,7 +6,7 @@ import 'package:athlima/login_page/login_page_widget.dart';
 import 'flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'home_page/home_page_widget.dart';
-import 'my_appointments/my_appointments_widget.dart';
+import 'my_events/my_events_widget.dart';
 import 'find_symptoms/find_symptoms_widget.dart';
 import 'profile_page/profile_page_widget.dart';
 
@@ -78,7 +78,7 @@ class _NavBarPageState extends State<NavBarPage> {
   Widget build(BuildContext context) {
     final tabs = {
       'homePage': HomePageWidget(),
-      'myAppointments': MyAppointmentsWidget(),
+      'myEvents': MyEventsWidget(),
       'findSymptoms': FindSymptomsWidget(),
       'profilePage': ProfilePageWidget(),
     };
@@ -106,7 +106,7 @@ class _NavBarPageState extends State<NavBarPage> {
               Icons.date_range_rounded,
               size: 24,
             ),
-            label: 'Appointments',
+            label: 'Events',
           ),
           BottomNavigationBarItem(
             icon: Icon(

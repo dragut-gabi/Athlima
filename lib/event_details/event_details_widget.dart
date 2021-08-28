@@ -1,5 +1,6 @@
 import '../backend/backend.dart';
-import '../components/edit_booking_widget.dart';
+import '../components/edit_event_widget.dart';
+import '../flutter_flow/flutter_flow_google_map.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
@@ -8,68 +9,68 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class AppointmentDetailsWidget extends StatefulWidget {
-  AppointmentDetailsWidget({
+class EventDetailsWidget extends StatefulWidget {
+  EventDetailsWidget({
     Key key,
-    this.appointmentDetails,
+    this.eventDetails,
   }) : super(key: key);
 
-  final DocumentReference appointmentDetails;
+  final DocumentReference eventDetails;
 
   @override
-  _AppointmentDetailsWidgetState createState() =>
-      _AppointmentDetailsWidgetState();
+  _EventDetailsWidgetState createState() => _EventDetailsWidgetState();
 }
 
-class _AppointmentDetailsWidgetState extends State<AppointmentDetailsWidget> {
+class _EventDetailsWidgetState extends State<EventDetailsWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<AppointmentsRecord>(
-      stream: AppointmentsRecord.getDocument(widget.appointmentDetails),
-      builder: (context, snapshot) {
-        // Customize what your widget looks like when it's loading.
-        if (!snapshot.hasData) {
-          return Center(
-            child: SizedBox(
-              width: 40,
-              height: 40,
-              child: SpinKitPumpingHeart(
-                color: FlutterFlowTheme.primaryColor,
-                size: 40,
-              ),
-            ),
-          );
-        }
-        final appointmentDetailsAppointmentsRecord = snapshot.data;
-        return Scaffold(
-          key: scaffoldKey,
-          appBar: AppBar(
-            backgroundColor: FlutterFlowTheme.background,
-            automaticallyImplyLeading: false,
-            leading: InkWell(
-              onTap: () async {
-                Navigator.pop(context);
-              },
-              child: Icon(
-                Icons.chevron_left_rounded,
-                color: FlutterFlowTheme.grayLight,
-                size: 32,
-              ),
-            ),
-            title: Text(
-              'Details',
-              style: FlutterFlowTheme.title3.override(
-                fontFamily: 'Lexend Deca',
-              ),
-            ),
-            actions: [],
-            centerTitle: false,
-            elevation: 0,
+    return Scaffold(
+      key: scaffoldKey,
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        backgroundColor: FlutterFlowTheme.background,
+        automaticallyImplyLeading: false,
+        leading: InkWell(
+          onTap: () async {
+            Navigator.pop(context);
+          },
+          child: Icon(
+            Icons.chevron_left_rounded,
+            color: FlutterFlowTheme.grayLight,
+            size: 32,
           ),
-          backgroundColor: FlutterFlowTheme.background,
-          body: SingleChildScrollView(
+        ),
+        title: Text(
+          'Details',
+          style: FlutterFlowTheme.title3.override(
+            fontFamily: 'Lexend Deca',
+          ),
+        ),
+        actions: [],
+        centerTitle: false,
+        elevation: 0,
+      ),
+      backgroundColor: FlutterFlowTheme.background,
+      body: StreamBuilder<EventsRecord>(
+        stream: EventsRecord.getDocument(widget.eventDetails),
+        builder: (context, snapshot) {
+          // Customize what your widget looks like when it's loading.
+          if (!snapshot.hasData) {
+            return Center(
+              child: SizedBox(
+                width: 40,
+                height: 40,
+                child: SpinKitPumpingHeart(
+                  color: FlutterFlowTheme.primaryColor,
+                  size: 40,
+                ),
+              ),
+            );
+          }
+          final columnMainContentEventsRecord = snapshot.data;
+          return SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
@@ -80,23 +81,7 @@ class _AppointmentDetailsWidgetState extends State<AppointmentDetailsWidget> {
                     children: [
                       Expanded(
                         child: Text(
-                          'Type of Appointment',
-                          style: FlutterFlowTheme.bodyText1.override(
-                            fontFamily: 'Lexend Deca',
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(20, 4, 20, 0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          appointmentDetailsAppointmentsRecord.appointmentType,
+                          columnMainContentEventsRecord.name,
                           style: FlutterFlowTheme.title3.override(
                             fontFamily: 'Lexend Deca',
                             fontWeight: FontWeight.bold,
@@ -107,15 +92,16 @@ class _AppointmentDetailsWidgetState extends State<AppointmentDetailsWidget> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(20, 16, 20, 0),
+                  padding: EdgeInsets.fromLTRB(20, 4, 20, 0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Expanded(
                         child: Text(
-                          'What’s the problem?',
-                          style: FlutterFlowTheme.bodyText1.override(
+                          columnMainContentEventsRecord.description,
+                          style: FlutterFlowTheme.bodyText2.override(
                             fontFamily: 'Lexend Deca',
+                            fontSize: 18,
                           ),
                         ),
                       )
@@ -124,61 +110,91 @@ class _AppointmentDetailsWidgetState extends State<AppointmentDetailsWidget> {
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(20, 4, 20, 0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          appointmentDetailsAppointmentsRecord
-                              .appointmentDescription,
-                          style: FlutterFlowTheme.bodyText2.override(
-                            fontFamily: 'Lexend Deca',
+                  child: StreamBuilder<SkillsRecord>(
+                    stream: SkillsRecord.getDocument(
+                        columnMainContentEventsRecord.skill),
+                    builder: (context, snapshot) {
+                      // Customize what your widget looks like when it's loading.
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: SizedBox(
+                            width: 40,
+                            height: 40,
+                            child: SpinKitPumpingHeart(
+                              color: FlutterFlowTheme.primaryColor,
+                              size: 40,
+                            ),
                           ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(20, 12, 20, 0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          'For',
-                          style: FlutterFlowTheme.bodyText1.override(
-                            fontFamily: 'Lexend Deca',
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(20, 12, 20, 0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      StreamBuilder<AppointmentsRecord>(
-                        stream: AppointmentsRecord.getDocument(
-                            appointmentDetailsAppointmentsRecord.reference),
-                        builder: (context, snapshot) {
-                          // Customize what your widget looks like when it's loading.
-                          if (!snapshot.hasData) {
-                            return Center(
-                              child: SizedBox(
-                                width: 40,
-                                height: 40,
-                                child: SpinKitPumpingHeart(
-                                  color: FlutterFlowTheme.primaryColor,
-                                  size: 40,
-                                ),
+                        );
+                      }
+                      final rowAppTypeSkillsRecord = snapshot.data;
+                      return Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              rowAppTypeSkillsRecord.sport,
+                              style: FlutterFlowTheme.title1.override(
+                                fontFamily: 'Lexend Deca',
                               ),
-                            );
-                          }
-                          final containerAppointmentsRecord = snapshot.data;
-                          return Material(
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              rowAppTypeSkillsRecord.level,
+                              style: FlutterFlowTheme.title1.override(
+                                fontFamily: 'Lexend Deca',
+                              ),
+                            ),
+                          )
+                        ],
+                      );
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(20, 4, 20, 0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
+                          child: Text(
+                            'Owner',
+                            style: FlutterFlowTheme.bodyText1.override(
+                              fontFamily: 'Lexend Deca',
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(20, 12, 20, 0),
+                  child: StreamBuilder<UsersRecord>(
+                    stream: UsersRecord.getDocument(
+                        columnMainContentEventsRecord.owner),
+                    builder: (context, snapshot) {
+                      // Customize what your widget looks like when it's loading.
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: SizedBox(
+                            width: 40,
+                            height: 40,
+                            child: SpinKitPumpingHeart(
+                              color: FlutterFlowTheme.primaryColor,
+                              size: 40,
+                            ),
+                          ),
+                        );
+                      }
+                      final rowUserUsersRecord = snapshot.data;
+                      return Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Material(
                             color: Colors.transparent,
                             elevation: 3,
                             shape: RoundedRectangleBorder(
@@ -213,8 +229,8 @@ class _AppointmentDetailsWidgetState extends State<AppointmentDetailsWidget> {
                                           decoration: BoxDecoration(
                                             shape: BoxShape.circle,
                                           ),
-                                          child: Image.asset(
-                                            'assets/images/UI_avatar_2@3x.png',
+                                          child: Image.network(
+                                            rowUserUsersRecord.photoUrl,
                                           ),
                                         ),
                                       ),
@@ -232,8 +248,7 @@ class _AppointmentDetailsWidgetState extends State<AppointmentDetailsWidget> {
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
                                               Text(
-                                                appointmentDetailsAppointmentsRecord
-                                                    .appointmentName,
+                                                rowUserUsersRecord.displayName,
                                                 style: FlutterFlowTheme
                                                     .subtitle1
                                                     .override(
@@ -245,8 +260,7 @@ class _AppointmentDetailsWidgetState extends State<AppointmentDetailsWidget> {
                                             ],
                                           ),
                                           Text(
-                                            appointmentDetailsAppointmentsRecord
-                                                .appointmentEmail,
+                                            rowUserUsersRecord.email,
                                             style: FlutterFlowTheme.bodyText1
                                                 .override(
                                               fontFamily: 'Lexend Deca',
@@ -261,10 +275,55 @@ class _AppointmentDetailsWidgetState extends State<AppointmentDetailsWidget> {
                                 ),
                               ),
                             ),
-                          );
-                        },
+                          )
+                        ],
+                      );
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(20, 12, 20, 0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          'Where',
+                          style: FlutterFlowTheme.bodyText1.override(
+                            fontFamily: 'Lexend Deca',
+                          ),
+                        ),
                       )
                     ],
+                  ),
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  height: 150,
+                  decoration: BoxDecoration(
+                    color: Color(0xFFEEEEEE),
+                  ),
+                  child: FlutterFlowGoogleMap(
+                    initialLocation: columnMainContentEventsRecord.location,
+                    markers: [
+                      if (columnMainContentEventsRecord != null)
+                        FlutterFlowMarker(
+                          columnMainContentEventsRecord.reference.path,
+                          columnMainContentEventsRecord.location,
+                        ),
+                    ],
+                    markerColor: GoogleMarkerColor.violet,
+                    mapType: MapType.normal,
+                    style: GoogleMapStyle.standard,
+                    initialZoom: 14,
+                    allowInteraction: true,
+                    allowZoom: true,
+                    showZoomControls: true,
+                    showLocation: true,
+                    showCompass: false,
+                    showMapToolbar: false,
+                    showTraffic: false,
+                    centerMapOnMarkerTap: true,
                   ),
                 ),
                 Padding(
@@ -293,10 +352,8 @@ class _AppointmentDetailsWidgetState extends State<AppointmentDetailsWidget> {
                     children: [
                       Expanded(
                         child: Text(
-                          dateTimeFormat(
-                              'MMMMEEEEd',
-                              appointmentDetailsAppointmentsRecord
-                                  .appointmentTime),
+                          dateTimeFormat('M/d h:m a',
+                              columnMainContentEventsRecord.dateTime),
                           style: FlutterFlowTheme.title1.override(
                             fontFamily: 'Lexend Deca',
                           ),
@@ -315,15 +372,14 @@ class _AppointmentDetailsWidgetState extends State<AppointmentDetailsWidget> {
                         builder: (context) {
                           return Container(
                             height: 720,
-                            child: EditBookingWidget(
-                              userAppointment:
-                                  appointmentDetailsAppointmentsRecord,
+                            child: EditEventWidget(
+                              event: columnMainContentEventsRecord.reference,
                             ),
                           );
                         },
                       );
                     },
-                    text: 'Reschedule',
+                    text: 'Edit',
                     options: FFButtonOptions(
                       width: 300,
                       height: 60,
@@ -346,11 +402,10 @@ class _AppointmentDetailsWidgetState extends State<AppointmentDetailsWidget> {
                   padding: EdgeInsets.fromLTRB(0, 0, 0, 36),
                   child: FFButtonWidget(
                     onPressed: () async {
-                      await appointmentDetailsAppointmentsRecord.reference
-                          .delete();
+                      await columnMainContentEventsRecord.reference.delete();
                       Navigator.pop(context);
                     },
-                    text: 'Cancel Appointment',
+                    text: 'Cancel Event',
                     options: FFButtonOptions(
                       width: 230,
                       height: 50,
@@ -371,9 +426,9 @@ class _AppointmentDetailsWidgetState extends State<AppointmentDetailsWidget> {
                 )
               ],
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

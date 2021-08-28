@@ -10,19 +10,19 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class EditBookingWidget extends StatefulWidget {
-  EditBookingWidget({
+class EditEventWidget extends StatefulWidget {
+  EditEventWidget({
     Key key,
-    this.userAppointment,
+    this.event,
   }) : super(key: key);
 
-  final AppointmentsRecord userAppointment;
+  final DocumentReference event;
 
   @override
-  _EditBookingWidgetState createState() => _EditBookingWidgetState();
+  _EditEventWidgetState createState() => _EditEventWidgetState();
 }
 
-class _EditBookingWidgetState extends State<EditBookingWidget> {
+class _EditEventWidgetState extends State<EditEventWidget> {
   DateTime datePicked;
   String dropDownValue;
   TextEditingController personsNameController;
@@ -31,10 +31,8 @@ class _EditBookingWidgetState extends State<EditBookingWidget> {
   @override
   void initState() {
     super.initState();
-    personsNameController =
-        TextEditingController(text: widget.userAppointment.appointmentName);
-    problemDescriptionController = TextEditingController(
-        text: widget.userAppointment.appointmentDescription);
+    personsNameController = TextEditingController();
+    problemDescriptionController = TextEditingController();
   }
 
   @override
@@ -62,7 +60,7 @@ class _EditBookingWidgetState extends State<EditBookingWidget> {
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
                 child: Text(
-                  'Edit Appointment',
+                  'Edit Event',
                   style: FlutterFlowTheme.title3.override(
                     fontFamily: 'Lexend Deca',
                   ),
@@ -75,7 +73,7 @@ class _EditBookingWidgetState extends State<EditBookingWidget> {
                     child: Padding(
                       padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
                       child: Text(
-                        'Edit the fields below in order to change your appointment.',
+                        'Edit the fields below in order to change your event.',
                         style: FlutterFlowTheme.bodyText1.override(
                           fontFamily: 'Lexend Deca',
                         ),
@@ -141,7 +139,6 @@ class _EditBookingWidgetState extends State<EditBookingWidget> {
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
                 child: FlutterFlowDropDown(
-                  initialOption: widget.userAppointment.appointmentType,
                   options: [
                     'Type of Appointment',
                     'Doctors Visit',
@@ -260,8 +257,7 @@ class _EditBookingWidgetState extends State<EditBookingWidget> {
                                 Padding(
                                   padding: EdgeInsets.fromLTRB(20, 4, 0, 0),
                                   child: Text(
-                                    dateTimeFormat('MMMMEEEEd',
-                                        widget.userAppointment.appointmentTime),
+                                    '',
                                     style: FlutterFlowTheme.bodyText2.override(
                                       fontFamily: 'Lexend Deca',
                                       color: FlutterFlowTheme.tertiaryColor,
@@ -329,16 +325,8 @@ class _EditBookingWidgetState extends State<EditBookingWidget> {
                     ),
                     FFButtonWidget(
                       onPressed: () async {
-                        final appointmentsUpdateData =
-                            createAppointmentsRecordData(
-                          appointmentName: personsNameController.text,
-                          appointmentType: dropDownValue,
-                          appointmentDescription:
-                              problemDescriptionController.text,
-                          appointmentTime: datePicked,
-                        );
-                        await widget.userAppointment.reference
-                            .update(appointmentsUpdateData);
+                        final eventsUpdateData = createEventsRecordData();
+                        await widget.event.update(eventsUpdateData);
                         Navigator.pop(context);
                       },
                       text: 'Save Changes',

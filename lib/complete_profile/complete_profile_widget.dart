@@ -388,7 +388,6 @@ class _CompleteProfileWidgetState extends State<CompleteProfileWidget>
                         final usersUpdateData = createUsersRecordData(
                           displayName: yourNameController.text,
                           age: int.parse(yourAgeController.text),
-                          ailments: ailmentsController.text,
                           userSex: radioButtonValue,
                         );
                         await buttonLoginUsersRecord.reference

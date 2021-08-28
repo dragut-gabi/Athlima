@@ -108,8 +108,11 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget>
                                         decoration: BoxDecoration(
                                           shape: BoxShape.circle,
                                         ),
-                                        child: Image.asset(
-                                          'assets/images/UI_avatar_2@3x.png',
+                                        child: Image.network(
+                                          valueOrDefault<String>(
+                                            profilePageUsersRecord.photoUrl,
+                                            'https://st2.depositphotos.com/1009634/7235/v/600/depositphotos_72350117-stock-illustration-no-user-profile-picture-hand.jpg',
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -263,7 +266,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget>
                                 children: [
                                   Expanded(
                                     child: AutoSizeText(
-                                      profilePageUsersRecord.ailments,
+                                      'Female',
                                       style: FlutterFlowTheme.title3.override(
                                         fontFamily: 'Lexend Deca',
                                       ),
@@ -331,12 +334,8 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget>
                     ),
                     Padding(
                       padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                      child: StreamBuilder<List<AppointmentsRecord>>(
-                        stream: queryAppointmentsRecord(
-                          queryBuilder: (appointmentsRecord) =>
-                              appointmentsRecord.where('appointmentTime',
-                                  isLessThan: getCurrentTimestamp),
-                        ),
+                      child: StreamBuilder<List<EventsRecord>>(
+                        stream: queryEventsRecord(),
                         builder: (context, snapshot) {
                           // Customize what your widget looks like when it's loading.
                           if (!snapshot.hasData) {
@@ -351,8 +350,8 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget>
                               ),
                             );
                           }
-                          List<AppointmentsRecord>
-                              listViewAppointmentsRecordList = snapshot.data;
+                          List<EventsRecord> listViewEventsRecordList =
+                              snapshot.data;
                           // Customize what your widget looks like with no query results.
                           if (snapshot.data.isEmpty) {
                             return Container(
@@ -366,10 +365,10 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget>
                             padding: EdgeInsets.zero,
                             shrinkWrap: true,
                             scrollDirection: Axis.vertical,
-                            itemCount: listViewAppointmentsRecordList.length,
+                            itemCount: listViewEventsRecordList.length,
                             itemBuilder: (context, listViewIndex) {
-                              final listViewAppointmentsRecord =
-                                  listViewAppointmentsRecordList[listViewIndex];
+                              final listViewEventsRecord =
+                                  listViewEventsRecordList[listViewIndex];
                               return Padding(
                                 padding: EdgeInsets.fromLTRB(0, 0, 0, 8),
                                 child: Material(

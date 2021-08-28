@@ -11,16 +11,18 @@ abstract class SkillsRecord
   static Serializer<SkillsRecord> get serializer => _$skillsRecordSerializer;
 
   @nullable
-  DocumentReference get sport;
+  String get sport;
 
   @nullable
-  DocumentReference get level;
+  String get level;
 
   @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference get reference;
 
-  static void _initializeBuilder(SkillsRecordBuilder builder) => builder;
+  static void _initializeBuilder(SkillsRecordBuilder builder) => builder
+    ..sport = ''
+    ..level = '';
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('skills');
@@ -40,8 +42,8 @@ abstract class SkillsRecord
 }
 
 Map<String, dynamic> createSkillsRecordData({
-  DocumentReference sport,
-  DocumentReference level,
+  String sport,
+  String level,
 }) =>
     serializers.toFirestore(
         SkillsRecord.serializer,

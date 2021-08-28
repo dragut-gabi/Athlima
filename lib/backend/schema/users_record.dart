@@ -26,9 +26,6 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
   int get age;
 
   @nullable
-  String get ailments;
-
-  @nullable
   LatLng get location;
 
   @nullable
@@ -59,7 +56,6 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
     ..password = ''
     ..uid = ''
     ..age = 0
-    ..ailments = ''
     ..phoneNumber = ''
     ..photoUrl = ''
     ..userSex = ''
@@ -88,7 +84,6 @@ Map<String, dynamic> createUsersRecordData({
   String password,
   String uid,
   int age,
-  String ailments,
   LatLng location,
   String phoneNumber,
   String photoUrl,
@@ -103,7 +98,6 @@ Map<String, dynamic> createUsersRecordData({
           ..password = password
           ..uid = uid
           ..age = age
-          ..ailments = ailments
           ..location = location
           ..phoneNumber = phoneNumber
           ..photoUrl = photoUrl

@@ -1,18 +1,23 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
+import '../backend/firebase_storage/storage.dart';
 import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_drop_down_template.dart';
+import '../flutter_flow/flutter_flow_place_picker.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
+import '../flutter_flow/place.dart';
+import '../flutter_flow/upload_media.dart';
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class BookAppointmentWidget extends StatefulWidget {
-  BookAppointmentWidget({
+class CreateEventWidget extends StatefulWidget {
+  CreateEventWidget({
     Key key,
     this.userProfile,
   }) : super(key: key);
@@ -20,15 +25,19 @@ class BookAppointmentWidget extends StatefulWidget {
   final DocumentReference userProfile;
 
   @override
-  _BookAppointmentWidgetState createState() => _BookAppointmentWidgetState();
+  _CreateEventWidgetState createState() => _CreateEventWidgetState();
 }
 
-class _BookAppointmentWidgetState extends State<BookAppointmentWidget>
+class _CreateEventWidgetState extends State<CreateEventWidget>
     with TickerProviderStateMixin {
   DateTime datePicked;
-  String dropDownValue;
-  TextEditingController personsNameController;
+  String dropDown1Value;
+  String dropDown2Value;
+  TextEditingController eventNameController;
   TextEditingController problemDescriptionController;
+  var placePickerValue = FFPlace();
+  String uploadedFileUrl = '';
+  SkillsRecord skillEvent;
   final animationsMap = {
     'textFieldOnPageLoadAnimation1': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
@@ -83,6 +92,7 @@ class _BookAppointmentWidgetState extends State<BookAppointmentWidget>
       this,
     );
 
+    eventNameController = TextEditingController();
     problemDescriptionController = TextEditingController();
   }
 
@@ -128,57 +138,19 @@ class _BookAppointmentWidgetState extends State<BookAppointmentWidget>
                   Padding(
                     padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
                     child: Text(
-                      'Book Appointment',
+                      'Create Event',
                       style: FlutterFlowTheme.title3.override(
                         fontFamily: 'Lexend Deca',
-                      ),
-                    ),
-                  ),
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
-                          child: Text(
-                            'Fill out the information below in order to book your appointment with our office.',
-                            style: FlutterFlowTheme.bodyText1.override(
-                              fontFamily: 'Lexend Deca',
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(0, 12, 0, 0),
-                    child: Text(
-                      'Emails will be sent to:',
-                      style: FlutterFlowTheme.bodyText1.override(
-                        fontFamily: 'Lexend Deca',
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(0, 4, 0, 12),
-                    child: Text(
-                      currentUserEmail,
-                      style: FlutterFlowTheme.subtitle1.override(
-                        fontFamily: 'Lexend Deca',
-                        color: FlutterFlowTheme.primaryColor,
                       ),
                     ),
                   ),
                   Padding(
                     padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
                     child: TextFormField(
-                      controller: personsNameController ??=
-                          TextEditingController(
-                        text: columnUsersRecord.displayName,
-                      ),
+                      controller: eventNameController,
                       obscureText: false,
                       decoration: InputDecoration(
-                        labelText: 'Booking For',
+                        labelText: 'Event name',
                         labelStyle: FlutterFlowTheme.bodyText1.override(
                           fontFamily: 'Lexend Deca',
                         ),
@@ -208,37 +180,104 @@ class _BookAppointmentWidgetState extends State<BookAppointmentWidget>
                     ).animated(
                         [animationsMap['textFieldOnPageLoadAnimation1']]),
                   ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
-                    child: FlutterFlowDropDown(
-                      options: [
-                        'Type of Appointment',
-                        'Doctors Visit',
-                        'Routine Checkup',
-                        'Scan/Update'
-                      ].toList(),
-                      onChanged: (value) {
-                        setState(() => dropDownValue = value);
-                      },
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      height: 60,
-                      textStyle: FlutterFlowTheme.subtitle2.override(
-                        fontFamily: 'Lexend Deca',
-                        color: FlutterFlowTheme.textColor,
+                  Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(10, 20, 0, 0),
+                            child: Text(
+                              'Choose Sport',
+                              textAlign: TextAlign.start,
+                              style: FlutterFlowTheme.bodyText1.override(
+                                fontFamily: 'Lexend Deca',
+                                fontSize: 12,
+                              ),
+                            ),
+                          )
+                        ],
                       ),
-                      icon: Icon(
-                        Icons.keyboard_arrow_down_rounded,
-                        color: FlutterFlowTheme.grayLight,
-                        size: 15,
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                        child: FlutterFlowDropDown(
+                          options: [
+                            'Basketall',
+                            'Football',
+                            'Voley',
+                            'Cyclism',
+                            'Golf',
+                            'Running',
+                            'Yoga'
+                          ].toList(),
+                          onChanged: (value) {
+                            setState(() => dropDown1Value = value);
+                          },
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          height: 60,
+                          textStyle: FlutterFlowTheme.subtitle2.override(
+                            fontFamily: 'Lexend Deca',
+                            color: FlutterFlowTheme.textColor,
+                          ),
+                          icon: Icon(
+                            Icons.keyboard_arrow_down_rounded,
+                            color: FlutterFlowTheme.grayLight,
+                            size: 15,
+                          ),
+                          fillColor: FlutterFlowTheme.darkBackground,
+                          elevation: 3,
+                          borderColor: FlutterFlowTheme.background,
+                          borderWidth: 2,
+                          borderRadius: 8,
+                          margin: EdgeInsets.fromLTRB(20, 4, 16, 4),
+                          hidesUnderline: true,
+                        ).animated(
+                            [animationsMap['dropDownOnPageLoadAnimation']]),
                       ),
-                      fillColor: FlutterFlowTheme.darkBackground,
-                      elevation: 3,
-                      borderColor: FlutterFlowTheme.background,
-                      borderWidth: 2,
-                      borderRadius: 8,
-                      margin: EdgeInsets.fromLTRB(20, 4, 16, 4),
-                      hidesUnderline: true,
-                    ).animated([animationsMap['dropDownOnPageLoadAnimation']]),
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(10, 20, 0, 0),
+                            child: Text(
+                              'Choose Level',
+                              style: FlutterFlowTheme.bodyText1.override(
+                                fontFamily: 'Lexend Deca',
+                                fontSize: 12,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                        child: FlutterFlowDropDown(
+                          options: [
+                            'Begginer',
+                            'Amateur',
+                            'Prodigy',
+                            'Professional'
+                          ].toList(),
+                          onChanged: (value) {
+                            setState(() => dropDown2Value = value);
+                          },
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          height: 60,
+                          textStyle: FlutterFlowTheme.subtitle2.override(
+                            fontFamily: 'Lexend Deca',
+                            color: FlutterFlowTheme.textColor,
+                          ),
+                          fillColor: FlutterFlowTheme.darkBackground,
+                          elevation: 3,
+                          borderColor: FlutterFlowTheme.background,
+                          borderWidth: 2,
+                          borderRadius: 8,
+                          margin: EdgeInsets.fromLTRB(20, 4, 16, 4),
+                          hidesUnderline: true,
+                        ),
+                      )
+                    ],
                   ),
                   Padding(
                     padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
@@ -246,7 +285,7 @@ class _BookAppointmentWidgetState extends State<BookAppointmentWidget>
                       controller: problemDescriptionController,
                       obscureText: false,
                       decoration: InputDecoration(
-                        labelText: 'What\'s the problem?',
+                        labelText: 'Description',
                         labelStyle: FlutterFlowTheme.bodyText1.override(
                           fontFamily: 'Lexend Deca',
                         ),
@@ -273,7 +312,7 @@ class _BookAppointmentWidgetState extends State<BookAppointmentWidget>
                         color: FlutterFlowTheme.textColor,
                       ),
                       textAlign: TextAlign.start,
-                      maxLines: 8,
+                      maxLines: 4,
                       keyboardType: TextInputType.multiline,
                     ).animated(
                         [animationsMap['textFieldOnPageLoadAnimation2']]),
@@ -331,7 +370,7 @@ class _BookAppointmentWidgetState extends State<BookAppointmentWidget>
                                     Padding(
                                       padding: EdgeInsets.fromLTRB(20, 4, 0, 0),
                                       child: Text(
-                                        dateTimeFormat('MMMMEEEEd', datePicked),
+                                        dateTimeFormat('M/d H:m', datePicked),
                                         style:
                                             FlutterFlowTheme.bodyText2.override(
                                           fontFamily: 'Lexend Deca',
@@ -370,6 +409,108 @@ class _BookAppointmentWidgetState extends State<BookAppointmentWidget>
                     ).animated([animationsMap['containerOnPageLoadAnimation']]),
                   ),
                   Padding(
+                    padding: EdgeInsets.fromLTRB(5, 16, 0, 0),
+                    child: FlutterFlowPlacePicker(
+                      iOSGoogleMapsApiKey:
+                          'AIzaSyBDu5h-kjIZXdzIBRLREEkGc68EN_hqXiE',
+                      androidGoogleMapsApiKey:
+                          'AIzaSyA1hlSfjC7q3GczIUzWOYJbHdM9yBkw84A',
+                      webGoogleMapsApiKey:
+                          'AIzaSyD6qj1It71hKsugKf_qkFLn7cEWbsXbzQI',
+                      onSelect: (place) =>
+                          setState(() => placePickerValue = place),
+                      defaultText: 'Select Location',
+                      icon: Icon(
+                        Icons.place,
+                        color: Colors.white,
+                        size: 16,
+                      ),
+                      buttonOptions: FFButtonOptions(
+                        width: 200,
+                        height: 40,
+                        color: FlutterFlowTheme.primaryColor,
+                        textStyle: FlutterFlowTheme.subtitle2.override(
+                          fontFamily: 'Lexend Deca',
+                          color: Colors.white,
+                        ),
+                        borderSide: BorderSide(
+                          color: Colors.transparent,
+                          width: 1,
+                        ),
+                        borderRadius: 12,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Container(
+                          width: 200,
+                          height: 100,
+                          decoration: BoxDecoration(
+                            color: Color(0xFFEEEEEE),
+                          ),
+                          child: Image.network(
+                            valueOrDefault<String>(
+                              uploadedFileUrl,
+                              'data:image/png;base64,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',
+                            ),
+                            width: 100,
+                            height: 100,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
+                          child: FFButtonWidget(
+                            onPressed: () async {
+                              final selectedMedia =
+                                  await selectMediaWithSourceBottomSheet(
+                                context: context,
+                              );
+                              if (selectedMedia != null &&
+                                  validateFileFormat(
+                                      selectedMedia.storagePath, context)) {
+                                showUploadMessage(context, 'Uploading file...',
+                                    showLoading: true);
+                                final downloadUrl = await uploadData(
+                                    selectedMedia.storagePath,
+                                    selectedMedia.bytes);
+                                ScaffoldMessenger.of(context)
+                                    .hideCurrentSnackBar();
+                                if (downloadUrl != null) {
+                                  setState(() => uploadedFileUrl = downloadUrl);
+                                  showUploadMessage(context, 'Success!');
+                                } else {
+                                  showUploadMessage(
+                                      context, 'Failed to upload media');
+                                  return;
+                                }
+                              }
+                            },
+                            text: 'Change Photo',
+                            options: FFButtonOptions(
+                              width: 140,
+                              height: 40,
+                              color: FlutterFlowTheme.darkBackground,
+                              textStyle: FlutterFlowTheme.bodyText2.override(
+                                fontFamily: 'Lexend Deca',
+                              ),
+                              elevation: 2,
+                              borderSide: BorderSide(
+                                color: Colors.transparent,
+                                width: 1,
+                              ),
+                              borderRadius: 8,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  Padding(
                     padding: EdgeInsets.fromLTRB(0, 24, 0, 20),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
@@ -401,22 +542,33 @@ class _BookAppointmentWidgetState extends State<BookAppointmentWidget>
                             [animationsMap['buttonOnPageLoadAnimation1']]),
                         FFButtonWidget(
                           onPressed: () async {
-                            final appointmentsCreateData =
-                                createAppointmentsRecordData(
-                              appointmentType: dropDownValue,
-                              appointmentTime: datePicked,
-                              appointmentName:
-                                  personsNameController?.text ?? '',
-                              appointmentDescription:
-                                  problemDescriptionController.text,
-                              appointmentEmail: currentUserEmail,
+                            final skillsCreateData = createSkillsRecordData(
+                              sport: dropDown1Value,
+                              level: dropDown2Value,
                             );
-                            await AppointmentsRecord.collection
+                            final skillsRecordReference =
+                                SkillsRecord.collection.doc();
+                            await skillsRecordReference.set(skillsCreateData);
+                            skillEvent = SkillsRecord.getDocumentFromData(
+                                skillsCreateData, skillsRecordReference);
+
+                            final eventsCreateData = createEventsRecordData(
+                              name: eventNameController.text,
+                              description: problemDescriptionController.text,
+                              location: placePickerValue.latLng,
+                              dateTime: datePicked,
+                              picture: uploadedFileUrl,
+                              owner: currentUserReference,
+                              skill: skillEvent.reference,
+                            );
+                            await EventsRecord.collection
                                 .doc()
-                                .set(appointmentsCreateData);
+                                .set(eventsCreateData);
                             Navigator.pop(context);
+
+                            setState(() {});
                           },
-                          text: 'Book Now',
+                          text: 'Create',
                           options: FFButtonOptions(
                             width: 150,
                             height: 50,

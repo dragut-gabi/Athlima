@@ -35,17 +35,7 @@ class _FindSymptomsWidgetState extends State<FindSymptomsWidget> {
             fontFamily: 'Lexend Deca',
           ),
         ),
-        actions: [
-          Padding(
-            padding: EdgeInsets.fromLTRB(0, 0, 16, 0),
-            child: Image.asset(
-              'assets/images/health-ai_logoHorz.png',
-              width: 120,
-              height: 40,
-              fit: BoxFit.fitWidth,
-            ),
-          )
-        ],
+        actions: [],
         centerTitle: false,
         elevation: 0,
       ),

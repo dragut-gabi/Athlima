@@ -366,19 +366,10 @@ class _BookingOldWidgetState extends State<BookingOldWidget> {
                         ),
                         FFButtonWidget(
                           onPressed: () async {
-                            final appointmentsCreateData =
-                                createAppointmentsRecordData(
-                              appointmentType: dropDownValue,
-                              appointmentTime: datePicked,
-                              appointmentName:
-                                  personsNameController?.text ?? '',
-                              appointmentDescription:
-                                  problemDescriptionController.text,
-                              appointmentEmail: currentUserEmail,
-                            );
-                            await AppointmentsRecord.collection
+                            final eventsCreateData = createEventsRecordData();
+                            await EventsRecord.collection
                                 .doc()
-                                .set(appointmentsCreateData);
+                                .set(eventsCreateData);
                             Navigator.pop(context);
                           },
                           text: 'Book Now',

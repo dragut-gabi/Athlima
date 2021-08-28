@@ -29,6 +29,9 @@ abstract class EventsRecord
   String get picture;
 
   @nullable
+  DocumentReference get owner;
+
+  @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference get reference;
 
@@ -61,6 +64,7 @@ Map<String, dynamic> createEventsRecordData({
   DateTime dateTime,
   DocumentReference skill,
   String picture,
+  DocumentReference owner,
 }) =>
     serializers.toFirestore(
         EventsRecord.serializer,
@@ -70,4 +74,5 @@ Map<String, dynamic> createEventsRecordData({
           ..location = location
           ..dateTime = dateTime
           ..skill = skill
-          ..picture = picture));
+          ..picture = picture
+          ..owner = owner));

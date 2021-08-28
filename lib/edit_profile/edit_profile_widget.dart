@@ -1,10 +1,11 @@
-import '../add_another_profile/add_another_profile_widget.dart';
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
+import '../backend/firebase_storage/storage.dart';
 import '../flutter_flow/flutter_flow_radio_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
+import '../flutter_flow/upload_media.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -24,15 +25,17 @@ class EditProfileWidget extends StatefulWidget {
 
 class _EditProfileWidgetState extends State<EditProfileWidget> {
   String radioButtonValue;
-  TextEditingController yourAgeController;
-  TextEditingController yourEmailController;
+  String uploadedFileUrl = '';
   TextEditingController yourNameController;
+  TextEditingController yourEmailController;
+  TextEditingController yourAgeController;
   TextEditingController yourAilmentsController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
+    yourAilmentsController = TextEditingController();
     yourEmailController = TextEditingController(text: currentUserEmail);
   }
 
@@ -111,7 +114,10 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                         shape: BoxShape.circle,
                       ),
                       child: Image.network(
-                        editProfileUsersRecord.photoUrl,
+                        valueOrDefault<String>(
+                          editProfileUsersRecord.photoUrl,
+                          'https://st2.depositphotos.com/1009634/7235/v/600/depositphotos_72350117-stock-illustration-no-user-profile-picture-hand.jpg',
+                        ),
                       ),
                     ),
                   ),
@@ -119,12 +125,27 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                     padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
                     child: FFButtonWidget(
                       onPressed: () async {
-                        await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => AddAnotherProfileWidget(),
-                          ),
+                        final selectedMedia =
+                            await selectMediaWithSourceBottomSheet(
+                          context: context,
                         );
+                        if (selectedMedia != null &&
+                            validateFileFormat(
+                                selectedMedia.storagePath, context)) {
+                          showUploadMessage(context, 'Uploading file...',
+                              showLoading: true);
+                          final downloadUrl = await uploadData(
+                              selectedMedia.storagePath, selectedMedia.bytes);
+                          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                          if (downloadUrl != null) {
+                            setState(() => uploadedFileUrl = downloadUrl);
+                            showUploadMessage(context, 'Success!');
+                          } else {
+                            showUploadMessage(
+                                context, 'Failed to upload media');
+                            return;
+                          }
+                        }
                       },
                       text: 'Change Photo',
                       options: FFButtonOptions(
@@ -273,10 +294,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                   Padding(
                     padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
                     child: TextFormField(
-                      controller: yourAilmentsController ??=
-                          TextEditingController(
-                        text: editProfileUsersRecord.ailments,
-                      ),
+                      controller: yourAilmentsController,
                       obscureText: false,
                       decoration: InputDecoration(
                         labelText: 'Ailments',
@@ -383,7 +401,6 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                           displayName: yourNameController?.text ?? '',
                           email: yourEmailController.text,
                           age: int.parse(yourAgeController?.text ?? ''),
-                          ailments: yourAilmentsController?.text ?? '',
                           userSex: editProfileUsersRecord.userSex,
                         );
                         await editProfileUsersRecord.reference
