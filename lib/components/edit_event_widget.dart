@@ -636,7 +636,6 @@ class _EditEventWidgetState extends State<EditEventWidget>
                                               '',
                                       location: placePickerValue.latLng,
                                       dateTime: datePicked,
-                                      skill: skillEvent.reference,
                                       picture: uploadedFileUrl,
                                     );
                                     await containerEventsRecord.reference
