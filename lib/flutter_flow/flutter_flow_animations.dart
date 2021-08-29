@@ -16,6 +16,7 @@ class AnimationInfo {
     this.delay = 0,
     this.fadeIn = false,
     this.slideOffset,
+    this.scale = 0,
   });
 
   final Curve curve;
@@ -24,6 +25,7 @@ class AnimationInfo {
   final int delay;
   final bool fadeIn;
   final Offset slideOffset;
+  final double scale;
   CurvedAnimation curvedAnimation;
 }
 
@@ -57,6 +59,14 @@ extension AnimatedWidgetExtension on Widget {
           returnedWidget = Transform.translate(
             child: child,
             offset: animationInfo.slideOffset * -animationValue,
+          );
+        }
+        if (animationInfo.scale > 0 && animationInfo.scale != 1.0) {
+          final scale = returnedWidget = Transform.scale(
+            scale: animationInfo.scale +
+                (1.0 - animationInfo.scale) *
+                    animationInfo.curvedAnimation.value,
+            child: child,
           );
         }
         if (animationInfo.fadeIn) {

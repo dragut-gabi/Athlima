@@ -475,7 +475,7 @@ class _EditEventWidgetState extends State<EditEventWidget>
                               child: Image.network(
                                 valueOrDefault<String>(
                                   uploadedFileUrl,
-                                  'https://www.megamindweb.com/assets/img//2016/03/sports.png',
+                                  'https://st3.depositphotos.com/23594922/31822/v/600/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg',
                                 ),
                                 width: 100,
                                 height: 100,
