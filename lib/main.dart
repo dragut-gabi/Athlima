@@ -7,7 +7,6 @@ import 'flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'home_page/home_page_widget.dart';
 import 'my_events/my_events_widget.dart';
-import 'find_symptoms/find_symptoms_widget.dart';
 import 'profile_page/profile_page_widget.dart';
 
 void main() async {
@@ -79,7 +78,6 @@ class _NavBarPageState extends State<NavBarPage> {
     final tabs = {
       'homePage': HomePageWidget(),
       'myEvents': MyEventsWidget(),
-      'findSymptoms': FindSymptomsWidget(),
       'profilePage': ProfilePageWidget(),
     };
     return Scaffold(
@@ -107,17 +105,6 @@ class _NavBarPageState extends State<NavBarPage> {
               size: 24,
             ),
             label: 'Events',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.favorite_border_rounded,
-              size: 24,
-            ),
-            activeIcon: Icon(
-              Icons.favorite_rounded,
-              size: 24,
-            ),
-            label: 'Symptoms',
           ),
           BottomNavigationBarItem(
             icon: Icon(

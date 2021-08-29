@@ -87,8 +87,10 @@ class _MyEventsWidgetState extends State<MyEventsWidget> {
                         children: [
                           StreamBuilder<List<EventsRecord>>(
                             stream: queryEventsRecord(
-                              queryBuilder: (eventsRecord) =>
-                                  eventsRecord.orderBy('dateTime'),
+                              queryBuilder: (eventsRecord) => eventsRecord
+                                  .where('people',
+                                      arrayContains: currentUserReference)
+                                  .orderBy('dateTime'),
                             ),
                             builder: (context, snapshot) {
                               // Customize what your widget looks like when it's loading.
@@ -378,8 +380,10 @@ class _MyEventsWidgetState extends State<MyEventsWidget> {
                           ),
                           StreamBuilder<List<EventsRecord>>(
                             stream: queryEventsRecord(
-                              queryBuilder: (eventsRecord) =>
-                                  eventsRecord.orderBy('dateTime'),
+                              queryBuilder: (eventsRecord) => eventsRecord
+                                  .where('owner',
+                                      isEqualTo: currentUserReference)
+                                  .orderBy('dateTime'),
                             ),
                             builder: (context, snapshot) {
                               // Customize what your widget looks like when it's loading.

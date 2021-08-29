@@ -32,13 +32,17 @@ abstract class EventsRecord
   DocumentReference get owner;
 
   @nullable
+  BuiltList<DocumentReference> get people;
+
+  @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference get reference;
 
   static void _initializeBuilder(EventsRecordBuilder builder) => builder
     ..name = ''
     ..description = ''
-    ..picture = '';
+    ..picture = ''
+    ..people = ListBuilder();
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('events');
@@ -75,4 +79,5 @@ Map<String, dynamic> createEventsRecordData({
           ..dateTime = dateTime
           ..skill = skill
           ..picture = picture
-          ..owner = owner));
+          ..owner = owner
+          ..people = null));

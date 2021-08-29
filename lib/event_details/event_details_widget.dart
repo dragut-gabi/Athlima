@@ -1,3 +1,4 @@
+import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../components/edit_event_widget.dart';
 import '../flutter_flow/flutter_flow_google_map.dart';
@@ -374,6 +375,65 @@ class _EventDetailsWidgetState extends State<EventDetailsWidget> {
                         ),
                       )
                     ],
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 28, 0, 20),
+                  child: FFButtonWidget(
+                    onPressed: () async {
+                      final eventsUpdateData = {
+                        'people': FieldValue.arrayUnion([currentUserReference]),
+                      };
+                      await columnMainContentEventsRecord.reference
+                          .update(eventsUpdateData);
+                    },
+                    text: 'Attend',
+                    options: FFButtonOptions(
+                      width: 300,
+                      height: 60,
+                      color: FlutterFlowTheme.primaryColor,
+                      textStyle: FlutterFlowTheme.subtitle2.override(
+                        fontFamily: 'Lexend Deca',
+                        color: FlutterFlowTheme.textColor,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      elevation: 2,
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                        width: 1,
+                      ),
+                      borderRadius: 8,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 0, 0, 36),
+                  child: FFButtonWidget(
+                    onPressed: () async {
+                      final eventsUpdateData = {
+                        'people':
+                            FieldValue.arrayRemove([currentUserReference]),
+                      };
+                      await columnMainContentEventsRecord.reference
+                          .update(eventsUpdateData);
+                    },
+                    text: 'Cancel attendence',
+                    options: FFButtonOptions(
+                      width: 230,
+                      height: 50,
+                      color: FlutterFlowTheme.darkBackground,
+                      textStyle: FlutterFlowTheme.subtitle2.override(
+                        fontFamily: 'Lexend Deca',
+                        color: FlutterFlowTheme.textColor,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      elevation: 2,
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                        width: 1,
+                      ),
+                      borderRadius: 8,
+                    ),
                   ),
                 ),
                 Padding(
